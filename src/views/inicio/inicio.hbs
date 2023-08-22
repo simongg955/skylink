@@ -1,0 +1,142 @@
+<style>
+    body{
+    background-color: #25292d;
+    text-align: center;
+}
+
+.list{
+    list-style-type: none !important;
+    display: flex;
+}
+
+.list li{
+    margin-right: 20px;
+    font-size: x-large;
+}
+
+.list  a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+}
+
+.barra{
+    display: flex;
+    padding: 0px 20px;
+    text-align: center;
+    margin-left: 250px;
+    margin-right: 250px;
+    color: rgb(70, 70, 238);
+}
+.barra a{
+    color: rgb(70, 70, 238);
+}
+.titulo{
+    color: #fff;
+    text-align: center;
+}
+.divbar{
+    overflow: hidden;
+    text-align: center;
+}
+
+img{
+    float: left;
+    margin-left: 300px;
+    margin-top: 30px;
+    border-radius: 100%;
+    -webkit-border-radius: 70%;
+    -moz-border-radius: 70%;
+    -ms-border-radius: 70%;
+    -o-border-radius: 70%;
+    height: 200px;
+    object-fit: cover;
+    /*Ajustalaimagenparallenarelespaciosindistorsión*/
+}
+
+.confiimg h1{
+    float : center;
+    margin-top: 50px;
+    
+}
+p {
+    color: #fff;
+    margin-top: 75px;
+}
+
+.h1{
+    color: #fff;
+}
+.h1{
+    color: rgb(70, 70, 238);
+    text-align: center;
+    margin-top: 150px;
+}
+.objetos{
+    color: rgb(70, 70, 238) ;
+}
+.confeimg{
+
+
+}
+
+</style>
+<body>
+    
+
+    <h1 style="color: #fff !important;" class="h1">mejor componente</h1>
+    <div class="objetos">
+
+
+
+        {{#each queryinicioCO}}
+        <div class="confeimg">
+        <p style="display: none;">{{id_componenetes}}</p>
+        <img src="{{imagen}}" alt="Product Image">
+        <h1 class="tipoinicio h1"> {{tipo}} </h1>
+        <h4 class="nombreinicio"> {{nombre}} </h4>
+        <h4 class="fabricanteinicio"> {{fabricante}} </h4>
+        <h4 class="precioinicio"> {{formatCurrency precio}} </h4>
+        <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        </div>
+        <br>
+        <br>
+        {{/each}}
+
+
+
+    <h1 style="color: #fff !important;" class="h1">mejor curso</h1>
+{{#each queryinicioCU}}
+        <div class="confeimg">
+        <p style="display: none;">{{id_cursos}}</p>
+        <img src="{{imagen}}" alt="Product Image">
+        <h1 class="titulo_cursoinicio h1"> {{titulo_curso}} </h1>
+        <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        <h4 class="duracioninicio"> {{duracion}} </h4>
+        </div>
+        
+        {{/each}}
+        
+
+
+        <h1 style="color: #fff !important;" class="h1">noticia mas reciente</h1>
+{{#each queryinicioNO}}
+        <div class="confeimg">
+        <p style="display: none;">{{id_noticias}}</p>
+        <img src="{{imagen}}" alt="Product Image">
+        <h1 class="tituloinicio h1"> {{titulo}} </h1>
+        <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        <h4 class="fechainicio"> {{fecha_convertida}} </h4>
+        </div>
+        <br>
+        <br>
+        {{/each}}
+
+    </div>
+            
+
+
+
+
+
+</body>

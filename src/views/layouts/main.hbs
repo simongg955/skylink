@@ -1,0 +1,387 @@
+<style>
+    body{
+    background-color: #25292d;
+    text-align: center;
+    text-shadow: 1px 2px 1px gray;
+}
+
+.list{
+    list-style-type: none !important;
+    display: flex;
+}
+
+.list li{
+    margin-right: 20px;
+    font-size: x-large;
+}
+
+.list  a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+}
+
+.barra{
+    display: flex;
+    padding: 0px 20px;
+    text-align: center;
+    margin-left: 250px;
+    margin-right: 250px;
+    color: rgb(70, 70, 238);
+}
+.barra li{
+    margin-left: 75px;
+}
+.barra a{
+    color: rgb(70, 70, 238);
+}
+.titulo{
+    color: #fff;
+    text-align: center;
+}
+.divbar{
+    overflow: hidden;
+    text-align: center;
+}
+
+
+
+.confiimg h1{
+    float : center;
+    margin-top: 50px;
+    
+}
+p {
+    color: #fff;
+    margin-top: 75px;
+}
+
+.h1{
+    color: #fff;
+}
+h1{
+    color: rgb(70, 70, 238);
+}
+</style>
+<body>
+    
+
+<header>
+    <div class="divbar">
+    <h1 class="titulo">Skylink X</h1>
+    <nav class="barra">
+        <ul class="list">
+            <div id="1">
+        <li><a href="/inicio">inicio</a></li>
+        </div> <div id="2">
+        <li><a href="/componentes">componentes</a></li>
+        </div><div id="3">
+        <li><a href="/cursos">cursos</a></li>
+        </div><div id="4">
+        <li><a href="/noticias">noticias</a></li>
+        </div>
+        </ul>
+    </nav>
+    </header>
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+
+                {{{ body }}}
+
+            </div>
+</div>
+<div>
+        <footer class="footer">
+            <div class="container-fluid " style="color:#fff; margin-top: 150px">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>document.write(new Date().getFullYear())</script> © SKYLINKX
+                        <div class="text-sm-end d-none d-sm-block">
+                            <a target="_blank" class="text-reset">aplicacion de informacion sobre objetos electronicos</a>
+                        </div>
+                    </div>
+                    
+            </div>
+            </div>
+        </footer>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://kit.fontawesome.com/2de5e0aa40.js" crossorigin="anónimo"></script>
+ <script>/*
+        
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            let uno = document.getElementById('1');
+            //new ↓
+            let unouno = document.getElementById('111');
+            //new ↑
+
+            let dos = document.getElementById('2');
+
+            //new ↓
+            let dosdos = document.getElementById('222');
+            //new ↑
+            let tres = document.getElementById('3');
+            let cuatro = document.getElementById('4');
+            let cinco = document.getElementById('5');
+            let seis = document.getElementById('6');
+            let siete = document.getElementById('7');
+            let ocho = document.getElementById('8');
+            let nueve = document.getElementById('9');
+            let diez = document.getElementById('10');
+            let once = document.getElementById('11');
+            let doce = document.getElementById('12');
+            let trece = document.getElementById('13');
+            let catorce = document.getElementById('14');
+            let quince = document.getElementById('15');
+            let dieciseix = document.getElementById('16');
+            let diecisiete = document.getElementById('17');
+            let dieciocho = document.getElementById('18');
+            let diecinueve = document.getElementById('19');
+            let veinte = document.getElementById('20');
+            let veintiuno = document.getElementById('21');
+            let veintitres = document.getElementById('23');
+            let veinticuatro = document.getElementById('24');
+            let veinticinco = document.getElementById('25');
+            let veintiseis = document.getElementById('26');
+            let veintisiete = document.getElementById('27');
+            let veintiocho = document.getElementById('28');
+            //22 es todas las sedes pertenecientes al buzon, no tiene elemento por id (22)
+            /*let veintidos = document.getElementById('22');
+            //Titulos y secciones 
+
+            //1,2,3 
+            var SeccionMovimiento = document.getElementById('SeccionMovimiento');
+            var tituloMovimiento = document.getElementById('tituloMovimiento');
+
+            //-4
+            var tituloProveedores = document.getElementById('tituloProveedores');
+            var SeccionProveedores = document.getElementById('SeccionProveedores');
+
+            //-5
+            var tituloInsumos = document.getElementById('tituloInsumos');
+            var SeccionInsumos = document.getElementById('SeccionInsumos');
+
+            //-6
+            var tituloTablasMaestras = document.getElementById('tituloTablasMaestras');
+            var SeccionTablasMaestras = document.getElementById('SeccionTablasMaestras');
+
+            //-7
+            var tituloOtros = document.getElementById('tituloOtros');
+            var SeccionOtros = document.getElementById('SeccionOtros');
+            //-8
+            var tituloRolYPermiso = document.getElementById('tituloRolYPermiso');
+            var SeccionRolYPermiso = document.getElementById('SeccionRolYPermiso');
+
+            //-9,10,11,1213,14,15,16,17,18,19,20,21,2223,24,25,26,27,28                             
+            var tituloBuzon = document.getElementById('tituloBuzon');
+            var SeccionBuzon = document.getElementById('SeccionBuzon'); 
+
+            //let classItemsMovimiento = document.getElementsByClass('classItemsMovimiento');
+
+            axios.post('/PermisosSistemaPorRol', {
+
+            })
+                .then(function (response) {
+                    //Cadena de permisos 
+                    let queryRol = response.data.PermisosSistemaPorRol;
+
+                    //Convierto la cadena en un array
+                    const arrayQueryRol = queryRol.split(',');
+                    //Busco los permisos en el array                  
+                    const unoPermisoEntradas = arrayQueryRol.some(item => item === '1')
+                    const dosPermisoSalidas = arrayQueryRol.some(item => item === '2')
+                    const tresPermisoStock = arrayQueryRol.some(item => item === '3')
+                    const cuatroPermisoProveedores = arrayQueryRol.some(item => item === '4')
+                    const cincoPermisoInsumos = arrayQueryRol.some(item => item === '5')
+                    const seisPermisoTablasMaestras = arrayQueryRol.some(item => item === '6')
+                    const sietePermisoOtros = arrayQueryRol.some(item => item === '7')
+                    const ochoPermisoRolesYPermisos = arrayQueryRol.some(item => item === '8')
+                    const nuevePermisosSJ = arrayQueryRol.some(item => item === '9')
+                    const diezPermisosBS = arrayQueryRol.some(item => item === '10')
+                    const oncePermisosBL = arrayQueryRol.some(item => item === '11')
+                    const docePermisosCV = arrayQueryRol.some(item => item === '12')
+                    const trecePermisosDM = arrayQueryRol.some(item => item === '13')
+                    const catorcePermisosER = arrayQueryRol.some(item => item === '14')
+                    const quincePermisosEN = arrayQueryRol.some(item => item === '15')
+                    const dieciseixPermisosGR = arrayQueryRol.some(item => item === '16')
+                    const diecisietePermisosMR = arrayQueryRol.some(item => item === '17')
+                    const dieciochoPermisosPB = arrayQueryRol.some(item => item === '18')
+                    const diecinuevePermisosSP = arrayQueryRol.some(item => item === '19')
+                    const veintePermisosSR = arrayQueryRol.some(item => item === '20')
+                    const veintiunoPermisosYR = arrayQueryRol.some(item => item === '21')
+                    const veintidosPermisosB = arrayQueryRol.some(item => item === '22')
+                    const veintitresPermisosRF = arrayQueryRol.some(item => item === '23')
+                    const veinticuatroPermisosJC = arrayQueryRol.some(item => item === '24')
+                    const veinticincoPermisosLV = arrayQueryRol.some(item => item === '25')
+                    const veintiseisPermisosLVE = arrayQueryRol.some(item => item === '26')
+                    const veintisietePermisosSB = arrayQueryRol.some(item => item === '27')
+                    const veintiochoPermisosRG = arrayQueryRol.some(item => item === '28')
+                    
+                    
+                    //Si longitud array es dirente de cero y tiene permiso true se le mostraran las secciones a las cuales puede haceder, ademas a las secciones que no puede acceder el display = none esto hará que se oculten 
+                    if (queryRol.length != 0) {
+
+
+
+                        if (unoPermisoEntradas || dosPermisoSalidas || tresPermisoStock) {
+
+                            if (unoPermisoEntradas) {
+                                uno.style.display = 'block';
+                                //new
+                                unouno.style.display = 'block';
+                                //new                                                                                  
+                            }
+
+                            if (dosPermisoSalidas) {
+                                dos.style.display = 'block';
+                                //new
+                                dosdos.style.display = 'block';
+                                //new
+                            }
+
+                            if (tresPermisoStock) {
+                                tres.style.display = 'block';
+                            }
+
+                        }
+                        else {
+                            SeccionMovimiento.style.display = 'none';
+                            tituloMovimiento.style.display = 'none';
+                        }
+
+                        if (cuatroPermisoProveedores) {
+                            cuatro.style.display = 'block';
+                        }
+                        else {
+                            tituloProveedores.style.display = 'none';
+                            SeccionProveedores.style.display = 'none';
+                        }
+
+                        if (cincoPermisoInsumos) {
+                            cinco.style.display = 'block';
+                        }
+                        else {
+                            tituloInsumos.style.display = 'none';
+                            SeccionInsumos.style.display = 'none';
+                        }
+
+                        if (seisPermisoTablasMaestras) {
+                            seis.style.display = 'block';
+                        }
+                        else {
+                            tituloTablasMaestras.style.display = 'none';
+                            SeccionTablasMaestras.style.display = 'none';
+                        }
+
+                        if (sietePermisoOtros) {
+                            siete.style.display = 'block';
+                        }
+                        else {
+                            tituloOtros.style.display = 'none';
+                            SeccionOtros.style.display = 'none';
+                        }
+
+                        if (ochoPermisoRolesYPermisos) {
+                            ocho.style.display = 'block';
+                        }
+                        else {
+                            tituloRolYPermiso.style.display = 'none';
+                            SeccionRolYPermiso.style.display = 'none';
+                        }
+                        if (nuevePermisosSJ || diezPermisosBS || oncePermisosBL || docePermisosCV || trecePermisosDM || catorcePermisosER || quincePermisosEN || dieciseixPermisosGR || diecisietePermisosMR || dieciochoPermisosPB || diecinuevePermisosSP || veintePermisosSR || veintiunoPermisosYR || veintidosPermisosB || veintitresPermisosRF || veinticuatroPermisosJC || veinticincoPermisosLV || veintiseisPermisosLVE || veintisietePermisosSB || veintiochoPermisosRG ){
+                        if (nuevePermisosSJ) {
+                            nueve.style.display = 'block';
+                        }
+                        if (diezPermisosBS) {
+                            diez.style.display = 'block';
+                        } 
+                        if (oncePermisosBL) {
+                            once.style.display = 'block';
+                        } 
+                        if (docePermisosCV) {
+                            doce.style.display = 'block';
+                        } 
+                        if (trecePermisosDM) {
+                            trece.style.display = 'block';
+                        } 
+                        if (catorcePermisosER) {
+                            catorce.style.display = 'block';
+                        } 
+                        if (quincePermisosEN) {
+                            quince.style.display = 'block';
+                        } 
+                        if (dieciseixPermisosGR) {
+                            dieciseix.style.display = 'block';
+                        } 
+                        if (diecisietePermisosMR) {
+                            diecisiete.style.display = 'block';
+                        } 
+                        if (dieciochoPermisosPB) {
+                            dieciocho.style.display = 'block';
+                        } 
+                        if (diecinuevePermisosSP) {
+                            diecinueve.style.display = 'block';
+                        } 
+                        if (veintePermisosSR) {
+                            veinte.style.display = 'block';
+                        }
+                        if (veintiunoPermisosYR) {
+                            veintiuno.style.display = 'block';
+                        }
+                        
+                        if(veintidosPermisosB){
+                            veintisiete.style.display = 'block';
+                            veintiocho.style.display = 'block';
+                            veintiseis.style.display = 'block';
+                            veinticinco.style.display = 'block';
+                            veinticuatro.style.display = 'block';
+                            veintitres.style.display = 'block';
+                            veintiuno.style.display = 'block';
+                            veinte.style.display = 'block';
+                            diecinueve.style.display = 'block';
+                            dieciocho.style.display = 'block';
+                            diecisiete.style.display = 'block';
+                            dieciseix.style.display = 'block';
+                            quince.style.display = 'block';
+                            catorce.style.display = 'block';
+                            trece.style.display = 'block';
+                            doce.style.display = 'block';
+                            once.style.display = 'block';
+                            diez.style.display = 'block';
+                            nueve.style.display = 'block';
+                        }
+                        if (veintitresPermisosRF) {
+                            veintitres.style.display = 'block';
+                        }
+                        if (veinticuatroPermisosJC) {
+                            veinticuatro.style.display = 'block';
+                        }
+                        if (veinticincoPermisosLV) {
+                            veinticinco.style.display = 'block';
+                        }
+                        if (veintiseisPermisosLVE) {
+                            veintiseis.style.display = 'block';
+                        }
+                        if (veintisietePermisosSB) {
+                            veintisiete.style.display = 'block';
+                        }
+                        if (veintiochoPermisosRG) {
+                            veintiocho.style.display = 'block';
+                        }
+                        }else {
+                        SeccionBuzon.style.display = 'none';
+                        tituloBuzon.style.display = 'none';
+                        }
+
+                    }
+                });
+        })*/
+    </script>
+
+</body>

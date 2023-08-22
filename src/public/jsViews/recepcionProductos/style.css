@@ -1,0 +1,119 @@
+
+    .wizard-nav .step-icon {
+
+        border: 1px solid rgb(151 183 231 / 56%);
+        color: #7095cd;
+    }
+
+    body[data-layout-mode=dark] .wizard-nav .list-item::after {
+        background-color: #cbd2d691;
+    }
+
+ .card-body {
+     margin-left: 4;
+     border-color: blue;
+ }
+ .table-responsive th {
+     background-color: rgba(152, 195, 235, 0.233);
+ }
+ td,
+ tfoot,
+ th,
+ thead,
+ tr {
+     border-color: rgba(62, 62, 66, 0.097);
+     border-style: solid;
+     border-width: 0;
+ }
+.alinearElemento{
+    text-align: center;
+    font-size: 13px;
+    padding: 4px;
+    border-bottom: 1px solid rgb(59, 59, 59);
+ }
+
+ .fuente{
+    font-size: 13px;
+    padding: 4px;
+    border-bottom: 1px solid rgb(59, 59, 59);
+
+ }
+
+
+
+
+
+ 
+ 
+.th_form{
+    text-align: center; 
+    
+ 
+}   
+.table-form-container{
+   overflow-y: auto;
+   max-height:600px
+}
+.table-form-container::-webkit-scrollbar{
+   width: 100px;
+}
+.table-form-container::-webkit-scrollbar-thumb{
+    background: rgb(74, 74, 73);
+    border-radius: 5px;
+}
+.estilo_input_form{
+    width: 200px;
+    height: 35px;
+    font-size: 13px;
+}
+.estilo_input_form_select_criadm{
+    width: 100px;
+    height: 35px;
+    font-size: 13px;  
+}
+.estilo_input_form_fecha{
+    width: 120px;
+    height: 35px;
+    font-size: 13px;  
+}
+td{
+    padding: 1px;
+}
+
+
+
+
+.table-responsive th{
+    background-color: rgb(59 71 82);        
+  }
+th {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  border-color:  rgb(59 71 82);
+}
+
+
+
+
+
+
+
+ 
+.ui-widget-content {    
+    border:  solid #dddddd00;
+    background: #ffffff00;
+    color: #333;
+}                
+.ui-widget.ui-widget-content {
+    border: 1px solid #09090900;
+}
+.ui-front {
+    z-index: none;
+}
+.ui-widget-content {
+    border: 1px solid #efebeb00;
+    background:#262a2c;
+    color: #f6f6f6;
+}
+

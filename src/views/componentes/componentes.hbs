@@ -1,0 +1,212 @@
+<style>
+    body{
+    background-color: #25292d;
+   text-align: center;
+}
+
+.list{
+    list-style-type: none !important;
+    display: flex;
+}
+
+.list li{
+    margin-right: 20px;
+    font-size: x-large;
+}
+
+.list  a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+}
+
+.barra{
+    display: flex;
+    padding: 0px 20px;
+    text-align: center;
+    margin-left: 250px;
+    margin-right: 250px;
+    color: rgb(70, 70, 238);
+}
+.barra a{
+    color: rgb(70, 70, 238);
+}
+.titulo{
+    color: #fff;
+    text-align: center;
+}
+.divbar{
+    overflow: hidden;
+    text-align: center;
+}
+
+img{
+    float: left;
+    margin-left: 300px;
+    margin-top: 30px;
+    border-radius: 100%;
+    -webkit-border-radius: 70%;
+    -moz-border-radius: 70%;
+    -ms-border-radius: 70%;
+    -o-border-radius: 70%;
+    height: 200px;
+    object-fit: cover;
+    /*Ajustalaimagenparallenarelespaciosindistorsión*/
+}
+
+.confiimg h1{
+    float : center;
+    margin-top: 50px;
+    
+}
+p {
+    color: #fff;
+    margin-top: 75px;
+}
+
+.h1{
+    color: #fff;
+}
+h1{
+    color: rgb(70, 70, 238);
+}
+.objetos{
+    color: rgb(70, 70, 238) ;
+}
+.confeimg{
+    border: 3px transparent solid;
+    margin-top: 5px;
+
+}
+/* Estilos CSS personalizados para el h4 */
+.custom-h4 {
+    border: 1px solid #dc3545; /* Color del borde */
+    background-color: transparent; /* Fondo transparente */
+    color: #dc3545; /* Color del texto */
+    padding: 0.25rem 0.5rem; /* Espaciado interno */
+    border-radius: 50%; /* Borde redondeado */
+    text-align: center; /* Alineación del texto */
+    cursor: pointer; /* Cursor de apuntador */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
+    display: inline-block; /* Mostrar como bloque en línea */
+    margin: 0; /* Eliminar márgenes por defecto */
+}
+
+.custom-h4:hover {
+    background-color: #dc3545; /* Color de fondo al pasar el mouse */
+    color: #fff; /* Color del texto al pasar el mouse */
+}
+
+.confeimg{
+    margin-top: 150px;
+}
+.tipoinicio{
+    color: rgb(70, 70, 238) ;
+}
+.nombreinicio{
+    color: rgb(70, 70, 238) ;
+}
+.fabricanteinicio{
+    color: rgb(70, 70, 238) ;
+}
+.descripcioninicio{
+    color: rgb(70, 70, 238) ;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+}
+.btnCO{
+    background-color: black;
+
+}
+
+.btnCOD{
+    background-color: black;
+    color: #fff;
+
+}
+
+.btnCOD:hover{
+background-color: blue
+}
+.btnCOE{
+    background-color: black;
+    color: #fff;
+
+}
+.btnCOE:hover{
+    background-color: red !important;
+}
+</style>
+<body>
+
+    <div class="objetos">
+        
+        <h1 class="h1"> Novedades Hardware y Pc</h1>
+        <div >
+            <button class="btnCO"><a href="/crearcomponentes">crear</a></button>
+        </div>
+        {{#each querycomponentes}} 
+        <div class="confeimg">
+        <p style="display: none;">{{id_componenetes}}</p>
+        <img src="{{imagen}}">
+        <h1 class="tipoinicio"> {{tipo}} </h1>
+        <h4 class="nombreinicio"> {{nombre}} </h4>
+        <h4 class="fabricanteinicio"> {{fabricante}} </h4>
+        <h4 class="precioinicio custom-h4 waves-effect"> {{formatCurrency precio}} </h4>
+        <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        </div>
+        <br>
+        <br>       
+        </div>
+        
+        <div>
+            
+            <button class="btnCOD"><a href="/editarcomponentes/{{id_componenetes}}"><i class="fas fa-edit"></i></a></button>
+            <button class="btnCOE" onclick="validarEliminar('{{id_componenetes}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
+
+        </div>
+        
+
+        {{/each}}
+        
+
+        <script>
+    //Funcion para confirma sí un usuario va a eliminar un registro
+    function validarEliminar(id_componenetes) {
+
+        if (confirm("¿Se eliminará el componente seleccionado, estás seguro de que deseas continuar?")) {
+
+            axios.post('/eliminarcomponentes', {
+                id_componenetes: id_componenetes
+            })
+                .then(function (response) {
+
+                    alert(response.data.mensaje)
+                    var link = document.createElement("a");
+                    link.href = `/componentes`;
+                    link.click();
+
+                })
+                .catch(function (response) {
+
+                    alert(response.data.mensaje)
+                    var link = document.createElement("a");
+                    link.href = `/componentes`;
+                    link.click();
+                })
+
+        } else {
+
+            var link = document.createElement("a");
+            link.href = `/componentes`;
+            link.click();
+        }
+
+    }
+
+</script>
+
+    
+</body>

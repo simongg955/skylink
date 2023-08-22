@@ -1,0 +1,147 @@
+<style>
+    body {
+        text-shadow: 1px 2px 1px gray;
+    }
+
+    .row {
+        text-align: center;
+        color: white !important;
+        margin-top: 2px;
+        margin-bottom: 2px;
+
+
+    }
+
+    .form-control {
+        width: 100%;
+        height: 6%;
+        color: black !important;
+        text-shadow: 3px 2px 3px gray;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .table-responsive {
+        border-radius: 10px;
+        border-color: black;
+        border-style: solid;
+        border-width: 2px;
+        box-shadow: rgb(160, 160, 160) 10px 10px 10px;
+        margin-right: 10px;
+        margin-left: 10px;
+        background-color: #25292d !important;
+
+    }
+
+    .cancelar {
+        text-decoration: none;
+        color: black !important;
+    }
+
+    .cancelarbtn {}
+
+    .cancelarbtn:hover {
+        background-color: red !important;
+    }
+
+    .editar {
+        cursor: pointer;
+    }
+
+    .editar:hover {
+        background-color: blue !important;
+    }
+</style>
+
+<div class="table-responsive">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">editar cursos</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/editarcursos" method="post">
+                        {{#each editarCursosById}}
+
+
+                        <div class="row" style="display: none;">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <label for="id_cursos" class="col-form-label">id_cursos:</label>
+                                    <input class="form-control" type="int" name="id_cursos" value="{{id_cursos}}"
+                                        title="id" id="id" s readonly required>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <label for="titulo_curso" class="col-form-label">titulo_curso:</label>
+                                    <input class="form-control" type="text" name="titulo_curso" value="{{titulo_curso}}"
+                                        title="Ingresa el titulo del curso " id="titulo_curso" maxlength="30"
+                                        oninput="this.value = this.value.replace(/[^A-ZÑ a-zñ]/g, '').replace(/(\..*)\./g, '$1');"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <label for="descripcion" class=" col-form-label">Descripción:</label>
+                                    <input class="form-control" type="text" name="descripcion" value="{{descripcion}}"
+                                        title="Ingrese Descripción Del curso" id="descripcion" maxlength="199"
+                                        oninput="this.value = this.value.replace(/[^A-ZÑ a-zñ]/g, '').replace(/(\..*)\./g, '$1');"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <label for="duracion" class="col-form-label">Duración:</label>
+                                    <input class="form-control" type="text" name="duracion" value="{{duracion}}"
+                                        title="Ingrese Duración Del curso" id="duracion" maxlength="199"
+                                        oninput="this.value = this.value.replace(/[^A-ZÑ a-zñ0-9]/g, '');">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <label for="puntuacion" class="col-form-label">Puntuación:</label>
+                                    <input class="form-control" type="number" name="puntuacion" value="{{puntuacion}}"
+                                        title="Ingrese Puntuación del curso" id="puntuacion" min="1" max="100"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br>
+
+                        <input class="editar" style="width:150px" type="submit" value="Editar">
+                        {{/each}}
+
+
+
+
+                    </form>
+                    <button style="width:150px; float: right;" class="cancelarbtn"> <a class="cancelar" id="lnkCancelar"
+                            href="/cursos"><i class="mdi mdi-table-large-remove">Cancelar</i></a></button>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</div>
+</div>
+<!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+</div>
