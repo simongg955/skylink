@@ -6,16 +6,12 @@ const bodyParser = require('body-parser');
 const helpers = require('handlebars-helpers')();
 
 const session = require('express-session')
-const https = require('https'); // Importa el módulo https u otros módulos relevantes
-
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0; // Desactiva temporalmente la validación del certificado
 
 
 //DotEnv 
 const { config } = require('./config')
 
 const app = express()
-
 
 
 

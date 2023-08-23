@@ -76,52 +76,49 @@ router.post("/", async (req, res) => {
 });
 
 //----------Mostrar menú según permisos -----------------
-// router.post("/PermisosSistemaPorRol", async (req, res) => {
-//   console.log('estoy aca')
-//   try {
-//     if (req.session.user) {
-//       const SECONDS = 60;
-//       const MILLISECONDS = 1000;
+router.post("/PermisosSistemaPorRol", async (req, res) => {
+  try {
+    if (!req.session.user) {
+      // Si no hay sesión de usuario, redirigir al inicio de sesión
+      return res.render("../views/login/login.hbs", { layout: "partials/empty" });
+    }
 
-//       if (req.session.user.lastVisit + SECONDS * MILLISECONDS > Date.now()) {
-//         req.session.user.lastVisit = Date.now();
-//         const datosUsuario = req.session.DatosUsuario;
-//         const usuario = datosUsuario[0].identificacionUsuario;
+    const SECONDS = 60;
+    const MILLISECONDS = 1000;
+    
+    // Verificar si la sesión expiró
+    if (req.session.user.lastVisit + SECONDS * MILLISECONDS <= Date.now()) {
+      return res.render("../views/login/login.hbs", { layout: "partials/empty" });
+    }
 
-//         const pool = await conex.getConnection();
-//         const result = await pool
-//           .request()
-//           .input("usuario", sql.VarChar, usuario)
-//           .query(
-//             "SELECT u.id_usuarios, u.identificacionUsuario, u.nombreCompletoUsuario, u.correoElectronicoUsuario, u.estadoUsuario, rp.codigoRol, rp.nombreRol, rp.permisosRol FROM Usuarios u INNER JOIN Roles rp ON u.id_roles = rp.id_roles WHERE u.identificacionUsuario = '1017923685' AND u.estadoUsuario = 'Activo' AND u.estadoRegistroUsuario = 'Activo' AND u.identificacionUsuario <> 'No registra' ORDER BY u.id_usuarios DESC"
-//           );
+    const datosUsuario = req.session.DatosUsuario;
+    const usuario = datosUsuario[0].identificacionUsuario;
 
-//         const resultado = result.recordset;
+    const pool = await conex.getConnection();
+    const result = await pool
+      .request()
+      .input("usuario", sql.VarChar, usuario)
+      .query(
+        "SELECT u.id_usuarios, u.identificacionUsuario, u.nombreCompletoUsuario, u.correoElectronicoUsuario, u.estadoUsuario, rp.codigoRol, rp.nombreRol, rp.permisosRol FROM Usuarios u INNER JOIN Roles rp ON u.id_roles = rp.id_roles WHERE u.identificacionUsuario = @usuario AND u.estadoUsuario = 'Activo' AND u.estadoRegistroUsuario = 'Activo' AND u.identificacionUsuario <> 'No registra' ORDER BY u.id_usuarios DESC"
+      );
 
-//         if (resultado.length > 0) {
-//           const PermisosSistemaPorRol = resultado[0].permisosRol;
-//           return res.send({ PermisosSistemaPorRol });
-//         } else {
-//           return res.render("../views/login/login.hbs", {
-//             layout: "partials/empty",
-//           });
-//         }
-//       } else {
-//         return res.render("../views/login/login.hbs", {
-//           layout: "partials/empty",
-//         });
-//       }
-//     } else {
-//       return res.render("../views/login/login.hbs", {
-//         layout: "partials/empty",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return res.render("../views/login/login.hbs", { layout: "partials/empty" });
-//   }
-  
-// });
+    const resultado = result.recordset;
+
+    if (resultado.length > 0) {
+      const PermisosSistemaPorRol = resultado[0].permisosRol;
+
+      // Devolver los permisos como respuesta
+      return res.send({ PermisosSistemaPorRol });
+    } else {
+      // Si no se encontraron resultados, redirigir al inicio de sesión
+      return res.render("../views/login/login.hbs", { layout: "partials/empty" });
+    }
+  } catch (error) {
+    console.log(error);
+    // En caso de error, redirigir al inicio de sesión
+    return res.render("../views/login/login.hbs", { layout: "partials/empty" });
+  }
+});
 
 
 //Ruta que se llama cuando el usuario sale

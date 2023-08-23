@@ -40,7 +40,7 @@ return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
 }
 })
 
-router.get('/crearcursos', async function (req, res) {
+router.get('/crearcursos',verificarPermisos, async function (req, res) {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
@@ -72,7 +72,7 @@ return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
 })
 
 
-router.post('/crearcursos', async function (req, res) {
+router.post('/crearcursos',verificarPermisos, async function (req, res) {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
@@ -116,7 +116,7 @@ router.post('/crearcursos', async function (req, res) {
   }
 })
 
-router.get('/editarcursos/:id_cursos', async (req, res) => {
+router.get('/editarcursos/:id_cursos',verificarPermisos, async (req, res) => {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
@@ -159,7 +159,7 @@ return res.render('../views/login/login.hbs', {layout: 'partials/empty' });
 }
 })
 
-router.post('/editarcursos',async (req, res) => {
+router.post('/editarcursos',verificarPermisos,async  (req, res) => {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
@@ -231,5 +231,38 @@ router.post('/eliminarcursos', async (req, res) => {
             
   });
   
+  async function verificarPermisos(req, res, next) {
+    if (req.session.user) {
+      const usuario = req.session.DatosUsuario[0].identificacionUsuario;
+  
+      const pool = await conex.getConnection();
+      const result = await pool
+        .request()
+        .input("usuario", sql.VarChar, usuario)
+        .query("SELECT u.id_usuarios, u.identificacionUsuario, u.nombreCompletoUsuario, u.correoElectronicoUsuario, u.estadoUsuario, rp.codigoRol, rp.nombreRol, rp.permisosRol FROM Usuarios u INNER JOIN Roles rp ON u.id_roles = rp.id_roles WHERE u.identificacionUsuario = @usuario AND u.estadoUsuario = 'Activo' AND u.estadoRegistroUsuario = 'Activo' AND u.identificacionUsuario <> 'No registra' ORDER BY u.id_usuarios DESC");
+  
+      const resultado = result.recordset;
+  
+      if (resultado.length > 0) {
+        const codigoRol = resultado[0].codigoRol;
+        const permisosRol = resultado[0].permisosRol;
+  
+        // Verificar los permisos necesarios
+        if (codigoRol === 'ADMIN' && permisosRol.includes('1') && permisosRol.includes('2') && permisosRol.includes('3')) {
+          // El usuario tiene los permisos necesarios, continuar
+          next();
+        } else {
+          // El usuario no tiene los permisos adecuados, redirigir o mostrar un mensaje de error
+          return res.render('../views/acceso_denegado.hbs'); // Cambiar a la vista de error o redirección correspondiente
+        }
+      } else {
+        // No se encontró el usuario, redirigir al inicio de sesión
+        return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+      }
+    } else {
+      // No hay sesión de usuario, redirigir al inicio de sesión
+      return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+    }
+  }
 
 module.exports = router;

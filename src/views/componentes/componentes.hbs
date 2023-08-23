@@ -110,33 +110,38 @@ h1{
     color: rgb(70, 70, 238) ;
 }
 .descripcioninicio{
-    color: rgb(70, 70, 238) ;
+    color: #fff ;
 }
 a{
     text-decoration: none;
     color: #fff;
 }
-.btnCO{
+.crearButton{
     background-color: black;
 
 }
 
-.btnCOD{
+.editarButton{
     background-color: black;
     color: #fff;
 
 }
 
-.btnCOD:hover{
+.editarButton:hover{
 background-color: blue
 }
-.btnCOE{
+.eliminarButton{
     background-color: black;
     color: #fff;
 
 }
-.btnCOE:hover{
+.eliminarButton:hover{
     background-color: red !important;
+}
+.contenedorbtn{
+      display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 <body>
@@ -144,8 +149,8 @@ background-color: blue
     <div class="objetos">
         
         <h1 class="h1"> Novedades Hardware y Pc</h1>
-        <div >
-            <button class="btnCO"><a href="/crearcomponentes">crear</a></button>
+        <div class="contenedorbtn">
+            <button class="crearButton" id="crearButton"><a href="/crearcomponentes">crear</a></button>
         </div>
         {{#each querycomponentes}} 
         <div class="confeimg">
@@ -157,14 +162,13 @@ background-color: blue
         <h4 class="precioinicio custom-h4 waves-effect"> {{formatCurrency precio}} </h4>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         </div>
-        <br>
-        <br>       
+             
         </div>
         
-        <div>
+        <div class="contenedorbtn">
             
-            <button class="btnCOD"><a href="/editarcomponentes/{{id_componenetes}}"><i class="fas fa-edit"></i></a></button>
-            <button class="btnCOE" onclick="validarEliminar('{{id_componenetes}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
+            <button class="editarButton" id="editarButton"><a href="/editarcomponentes/{{id_componenetes}}"><i class="fas fa-edit"></i></a></button>
+            <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_componenetes}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
 
         </div>
         

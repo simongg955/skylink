@@ -1,68 +1,87 @@
 <style>
-    body{
-    background-color: #25292d;
-    text-align: center;
-    text-shadow: 1px 2px 1px gray;
-}
+    body {
+        background-color: #25292d;
+        text-align: center;
+        text-shadow: 1px 2px 1px gray;
+        margin: 0;
+        padding: 0;
+    }
 
-.list{
-    list-style-type: none !important;
-    display: flex;
-}
+    .list {
+        list-style-type: none !important;
+        display: flex;
+        justify-content: center; /* Centrar elementos horizontalmente */
+        padding: 0;
+    }
 
-.list li{
-    margin-right: 20px;
-    font-size: x-large;
-}
+    .list li {
+        margin-right: 20px;
+        font-size: x-large;
+    }
 
-.list  a {
-    text-decoration: none;
-    color: #fff;
-    transition: color 0.3s ease-in-out;
-}
+    .list a {
+        text-decoration: none;
+        color: #fff;
+        transition: color 0.3s ease-in-out;
+    }
 
-.barra{
-    display: flex;
-    padding: 0px 20px;
-    text-align: center;
-    margin-left: 250px;
-    margin-right: 250px;
-    color: rgb(70, 70, 238);
-}
-.barra li{
-    margin-left: 75px;
-}
-.barra a{
-    color: rgb(70, 70, 238);
-}
-.titulo{
-    color: #fff;
-    text-align: center;
-}
-.divbar{
-    overflow: hidden;
-    text-align: center;
-}
+    .barra {
+        display: flex;
+        justify-content: center; /* Centrar la barra horizontalmente */
+        padding: 0px 20px;
+        text-align: center;
+        color: rgb(70, 70, 238);
+        background-color: #25292d;
+    }
 
+    .barra li {
+        padding-left: 105px;
+        padding-right: 105px; /* Espaciado en pantalla completa */
+    }
 
+    .barra a {
+        color: rgb(70, 70, 238);
+    }
 
-.confiimg h1{
-    float : center;
-    margin-top: 50px;
-    
-}
-p {
-    color: #fff;
-    margin-top: 75px;
-}
+    .titulo {
+        color: #fff;
+        text-align: center;
+    }
 
-.h1{
-    color: #fff;
-}
-h1{
-    color: rgb(70, 70, 238);
-}
+    .divbar {
+        overflow: hidden;
+        text-align: center;
+        background-color: #25292d;
+        padding: 20px;
+    }
+
+    .confiimg h1 {
+        float: center;
+        margin-top: 50px;
+    }
+
+    p {
+        color: #fff;
+        margin-top: 75px;
+    }
+
+    .h1 {
+        color: #fff;
+    }
+
+    h1 {
+        color: rgb(70, 70, 238);
+    }
+
+    @media (max-width: 1500px) {
+        /* Estilos para pantallas más pequeñas */
+        .barra li {
+            padding-left: 10px;
+            padding-right: 10px; /* Espaciado reducido en pantallas pequeñas */
+        }
+    }
 </style>
+
 <body>
     
 
@@ -109,13 +128,58 @@ h1{
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://kit.fontawesome.com/2de5e0aa40.js" crossorigin="anónimo"></script>
- <script>/*
+ <script>
         
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    let botonCrear = document.getElementById('crearButton');
+    let botonEditar = document.getElementById('editarButton');
+    let botonEliminar = document.getElementById('eliminarButton');
+    let botonCrearCurso = document.getElementById('crearCursoButton');
+    let botonCrearComponentes = document.getElementById('crearComponentesButton');
+    let botonCrearNoticias = document.getElementById('crearNoticiasButton');
+    let botonEditarCursos = document.getElementById('editarCursosButton');
+    let botonEditarComponentes = document.getElementById('editarComponentesButton');
+    let botonEditarNoticias = document.getElementById('editarNoticiasButton');
 
-        document.addEventListener("DOMContentLoaded", () => {
+    axios.post('/PermisosSistemaPorRol', {})
+        .then(function (response) {
+            // Cadena de permisos 
+            let permisosRol = response.data.PermisosSistemaPorRol;
 
+            // Verificar si el usuario tiene el rol de administrador y los permisos necesarios
+            if (permisosRol.includes('1') && permisosRol.includes('2') && permisosRol.includes('3')) {
+                // Mostrar los botones para el administrador
+                botonCrear.style.display = 'block';
+                botonEditar.style.display = 'block';
+                botonEliminar.style.display = 'block';
+                botonCrearCurso.style.display = 'block';
+                botonCrearComponentes.style.display = 'block';
+                botonCrearNoticias.style.display = 'block';
+                botonEditarCursos.style.display = 'block';
+                botonEditarComponentes.style.display = 'block';
+                botonEditarNoticias.style.display = 'block';
+            } else {
+                // Ocultar los botones para otros roles
+                botonCrear.style.display = 'none';
+                botonEditar.style.display = 'none';
+                botonEliminar.style.display = 'none';
+                botonCrearCurso.style.display = 'none';
+                botonCrearComponentes.style.display = 'none';
+                botonCrearNoticias.style.display = 'none';
+                botonEditarCursos.style.display = 'none';
+                botonEditarComponentes.style.display = 'none';
+                botonEditarNoticias.style.display = 'none';
+            }
+        })
+        .catch(function (error) {
+            console.error("Error al obtener los permisos del usuario:", error);
+        });
+});
+
+
+/*
             let uno = document.getElementById('1');
             //new ↓
             let unouno = document.getElementById('111');

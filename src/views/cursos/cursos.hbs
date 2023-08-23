@@ -37,20 +37,32 @@
 /* Estilos para diferentes rangos de puntuación */
 .puntuacion.rojo {
   border: 1px solid #dc3545; /* Color del borde */
-  background-color: #ff6b6b;
-  color: black;
+
+  color: #fff;
 }
 
 .puntuacion.amarillo {
   border: 1px solid yellow; /* Color del borde */
-  background-color: #ffd166;
-  color: #000000;
+
+  color: #fff;
 }
 
 .puntuacion.verde {
   border: 1px solid green; /* Color del borde */
-  background-color: #6abf69;
-  color: black;
+  
+  color: #fff;
+}
+.puntuacion.verde:hover{
+    background-color: #6abf69;
+    color: black;
+}
+.puntuacion.rojo:hover{
+    background-color: #ff6b6b;
+    color: black;
+}
+.puntuacion.amarillo:hover{
+  background-color: #ffd166;
+    color: black;
 }
 .barra{
     display: flex;
@@ -114,29 +126,30 @@ a{
     text-decoration: none !important;
     color: #fff;
 }
-.btnCUD{
+.editarButton{
     background-color: black;
     color: #fff;
+    float: right;
 
 }
-.btnCU{
+.crearButton{
     background-color: black;
     color: #fff;
-
 }
-.btnCUD:hover{
+.editarButton:hover{
 background-color: blue
 }
-.btnCUE{
+.eliminarButton{
     background-color: black;
     color: #fff;
+    float: right;
 
 }
-.btnCUE:hover{
+.eliminarButton:hover{
     background-color: red !important;
 }
 .descripcioninicio{
-    color: rgb(70, 70, 238) ;
+    color: #fff ;
 }
 .duracioninicio{
     color: rgb(70, 70, 238) ;
@@ -145,29 +158,34 @@ background-color: blue
     color: rgb(70, 70, 238) ;
 }
 
+.contenedorbtn{
+      display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 </style>
 <body>
     <div class="objetos">
-        <div >
-            <button class="btnCU"><a href="/crearcursos">crear</a></button>
+        <div class="contenedorbtn">
+            <button class="crearButton" id="crearButton"><a href="/crearcursos">crear</a></button>
         </div>
         
 {{#each querycursos}}
     <div class="confeimg">
         <p style="display: none;">{{id_cursos}}</p>
         <img src="{{imagen}}">
+        <h4 class="puntuacion" style="float: right; margin-bottom: 5px;">{{puntuacion}}</h4>
         <h1 class="titulo_cursoinicio"> {{titulo_curso}} </h1>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <h4 class="duracioninicio"> {{duracion}} </h4>
-        <h4 class="puntuacion">{{puntuacion}}</h4>
+        
     </div>
-    <br>
-    <br>
+
     </div>
-    <div>
-        <button class="btnCUD"><a href="/editarcursos/{{id_cursos}}"><i class="fas fa-edit"></i></a></button>
-        <button class="btnCUE" onclick="validarEliminar('{{id_cursos}}')" data-bs-original-title="Eliminar" ><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
+    <div class="contenedorbtn">
+        <button class="editarButton" id="editarButton"><a href="/editarcursos/{{id_cursos}}"><i class="fas fa-edit"></i></a></button>
+        <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_cursos}}')" data-bs-original-title="Eliminar" ><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
     </div>
 
     <script>

@@ -50,7 +50,7 @@ router.get("/componentes", async function (req, res) {
   }
 });
 
-router.get("/crearcomponentes", async function (req, res) {
+router.get("/crearcomponentes",verificarPermisos, async function (req, res) {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + SECONDS * MILLISECONDS > Date.now()) {
@@ -83,7 +83,7 @@ router.get("/crearcomponentes", async function (req, res) {
   }
 });
 
-router.post("/crearcomponentes", async function (req, res) {
+router.post("/crearcomponentes",verificarPermisos, async function (req, res) {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + SECONDS * MILLISECONDS > Date.now()) {
@@ -131,7 +131,7 @@ router.post("/crearcomponentes", async function (req, res) {
   }
 });
 
-router.get("/editarcomponentes/:id_componenetes", async function (req, res) {
+router.get("/editarcomponentes/:id_componenetes",verificarPermisos, async function (req, res) {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + SECONDS * MILLISECONDS > Date.now()) {
@@ -181,7 +181,7 @@ router.get("/editarcomponentes/:id_componenetes", async function (req, res) {
   }
 });
 
-router.post("/editarcomponentes", async function (req, res) {
+router.post("/editarcomponentes",verificarPermisos, async function (req, res) {
   try {
     if (req.session.user) {
       if (req.session.user.lastVisit + SECONDS * MILLISECONDS > Date.now()) {
@@ -289,5 +289,40 @@ Handlebars.registerHelper("formatCurrency", function (value) {
 
   return formattedValue;
 });
+
+async function verificarPermisos(req, res, next) {
+  if (req.session.user) {
+    const usuario = req.session.DatosUsuario[0].identificacionUsuario;
+
+    const pool = await conex.getConnection();
+    const result = await pool
+      .request()
+      .input("usuario", sql.VarChar, usuario)
+      .query("SELECT u.id_usuarios, u.identificacionUsuario, u.nombreCompletoUsuario, u.correoElectronicoUsuario, u.estadoUsuario, rp.codigoRol, rp.nombreRol, rp.permisosRol FROM Usuarios u INNER JOIN Roles rp ON u.id_roles = rp.id_roles WHERE u.identificacionUsuario = @usuario AND u.estadoUsuario = 'Activo' AND u.estadoRegistroUsuario = 'Activo' AND u.identificacionUsuario <> 'No registra' ORDER BY u.id_usuarios DESC");
+
+    const resultado = result.recordset;
+
+    if (resultado.length > 0) {
+      const codigoRol = resultado[0].codigoRol;
+      const permisosRol = resultado[0].permisosRol;
+
+      // Verificar los permisos necesarios
+      if (codigoRol === 'ADMIN' && permisosRol.includes('1') && permisosRol.includes('2') && permisosRol.includes('3')) {
+        // El usuario tiene los permisos necesarios, continuar
+        next();
+      } else {
+        // El usuario no tiene los permisos adecuados, redirigir o mostrar un mensaje de error
+        return res.render('../views/acceso_denegado.hbs'); // Cambiar a la vista de error o redirección correspondiente
+      }
+    } else {
+      // No se encontró el usuario, redirigir al inicio de sesión
+      return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+    }
+  } else {
+    // No hay sesión de usuario, redirigir al inicio de sesión
+    return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+  }
+}
+
 
 module.exports = router;

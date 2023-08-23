@@ -79,7 +79,7 @@ h1{
     margin-top: 150px;
 }
 .descripcioninicio{
-    color: rgb(70, 70, 238) ;
+    color: #fff ;
 }
 .fecha{
     color: rgb(70, 70, 238) ;
@@ -92,33 +92,38 @@ a{
     text-decoration: none !important;
     color: #fff;
 }
-.btnNO{
+.crearButton{
     background-color: black;
 color: #fff;
 }
-.btnNOD{
+.editarButton{
     background-color: black;
     color: #fff;
 
 }
 
-.btnNOD:hover{
+.editarButton:hover{
 background-color: blue
 }
-.btnNOE{
+.eliminarButton{
     background-color: black;
     color: #fff;
 
 }
-.btnNOE:hover{
+.eliminarButton:hover{
     background-color: red !important;
+}
+.contenedorbtn{
+      display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 <body>
   
 <div class="objetos">
-    <div >
-            <button class="btnNO"><a href="/crearnoticias">crear</a></button>
+    <div class="contenedorbtn">
+            <button class="crearButton" id="crearButton"><a href="/crearnoticias">crear</a></button>
         </div>
 {{#each querynoticias}}
         <div class="confeimg">
@@ -128,15 +133,14 @@ background-color: blue
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <h4 class="fecha">{{fecha_convertida}} </h4>
         </div>
-        <br>
-        <br>
+
         </div>
         
-        <div>
+        <div class="contenedorbtn">
             
-            <button class="btnNOD"><a href="/editarnoticias/{{id_noticias}}
+            <button class="editarButton" id="editarButton"><a href="/editarnoticias/{{id_noticias}}
 "><i class="fas fa-edit"></i></a></button>
-            <button class="btnNOE" onclick="validarEliminar('{{id_noticias}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
+            <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_noticias}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
 
         </div>
 
