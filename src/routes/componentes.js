@@ -277,6 +277,49 @@ return res.render("../views/login/login.hbs", { layout: "partials/empty" });
 }
 });
 
+router.get('/verdetallescomponente/:id_componenetes', async (req, res) => {
+  try {
+    if (req.session.user) {
+      if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
+        req.session.user.lastVisit = Date.now();
+         var datosUsuario =  req.session.DatosUsuario;;
+
+         try{        
+      const id_componenetes = req.params.id_componenetes;
+    const pool = await conex.getConnection();
+  
+    const querycomponentesBYId =  await pool 
+    .request()
+    .input('id_componenetes', sql.VarChar, id_componenetes)
+    .query(
+      "SELECT * FROM componentes WHERE id_componenetes = @id_componenetes");
+  
+      
+  const vercomponentesById = querycomponentesBYId.recordset;
+  
+  res.render('../views/componentes/verdetallescomponentes.hbs', {vercomponentesById, datosUsuario})
+}
+catch (error) {
+  return res.send('Lo sentimos algo falló, contacta a el administrador del sistema')
+  
+}
+
+}
+else {
+
+return res.render('../views/login/login.hbs', {layout: 'partials/empty' }); 
+}
+}
+else {
+return res.render('../views/login/login.hbs', {layout: 'partials/empty' }); 
+}
+}
+catch
+{       
+return res.render('../views/login/login.hbs', {layout: 'partials/empty' }); 
+}
+})
+
 // fromato moneda
 Handlebars.registerHelper("formatCurrency", function (value) {
   // Asumiendo que `value` es un número

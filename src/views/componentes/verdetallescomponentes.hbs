@@ -1,0 +1,163 @@
+<style>
+.titulo{
+    color: 	#ebf2f6;
+    text-align: center;
+}
+.divbar{
+    overflow: hidden;
+    text-align: center;
+}
+
+img{
+    float: left;
+    margin-left: 300px;
+    margin-top: 30px;
+    border-radius: 100%;
+    -webkit-border-radius: 70%;
+    -moz-border-radius: 70%;
+    -ms-border-radius: 70%;
+    -o-border-radius: 70%;
+    height: 200px;
+    object-fit: cover;
+    /*Ajustalaimagenparallenarelespaciosindistorsión*/
+}
+
+
+
+.h1{
+    color: 	#ebf2f6;
+}
+h1{
+    color: rgb(70, 70, 238);
+}
+.objetos{
+    color: rgb(70, 70, 238) ;
+}
+.confeimg{
+    border: 3px transparent solid;
+    margin-top: 5px;
+        text-align: center;
+
+}
+/* Estilos CSS personalizados para el h4 */
+.custom-h4 {
+    border: 1px solid #dc3545; /* Color del borde */
+    background-color: transparent; /* Fondo transparente */
+    color: #dc3545; /* Color del texto */
+    padding: 0.25rem 0.5rem; /* Espaciado interno */
+    border-radius: 50%; /* Borde redondeado */
+    text-align: center; /* Alineación del texto */
+    cursor: pointer; /* Cursor de apuntador */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
+    display: inline-block; /* Mostrar como bloque en línea */
+    margin: 0; /* Eliminar márgenes por defecto */
+}
+
+.custom-h4:hover {
+    background-color: #dc3545; /* Color de fondo al pasar el mouse */
+    color: #ebf2f6; /* Color del texto al pasar el mouse */
+}
+
+.confeimg{
+    margin-top: 150px;
+}
+.tipoinicio{
+    color: #2a6e9e ;
+}
+.nombreinicio{
+    color: rgb(70, 70, 238) ;
+}
+.fabricanteinicio{
+    color: rgb(70, 70, 238) ;
+}
+.descripcioninicio{
+    color: #ebf2f6 ;
+}
+.verdetalles{
+    color: #144c7a ;
+    text-decoration: underline !important;
+}
+a{
+    text-decoration: none;
+    color: #ebf2f6;
+}
+.crearButton{
+    background-color: black;
+
+}
+
+.editarButton{
+    background-color: black;
+    color: #ebf2f6;
+
+}
+
+.editarButton:hover{
+background-color: blue
+}
+.eliminarButton{
+    background-color: black;
+    color: #ebf2f6;
+
+}
+.eliminarButton:hover{
+    background-color: red !important;
+}
+.contenedorComponentes{
+      display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.boton{
+    background-color: black !important;
+    margin-top: 5px;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-250%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.animacion-componentes {
+    animation: slideInFromTop 0.7s ease-out;
+    
+}
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+.animacion-componentes1 {
+    animation: slideInFromLeft 0.7s ease-out;
+    
+}
+
+</style>
+
+<body>
+    
+
+ 
+        {{#each vercomponentesById}}
+        <div class="animacion-componentes confeimg">
+        <p style="display: none;">{{id_componenetes}}</p>
+        <img src="{{imagen}}">
+        <h1 class="tipoinicio">{{tipo}}</h1>
+        <h1 class="nombreinicio"> {{nombre}} </h1>
+        <h4 class="fabricanteinicio"> {{fabricante}} </h4>
+       <h4 class="precioinicio custom-h4 waves-effect"> {{formatCurrency precio}} </h4>
+        <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        </div>
+{{/each}}
+<div class="animacion-componentes1">
+<button class="boton"><a href="/componentes"> atras</a></button>
+</div>
+    
+        
+        </body>

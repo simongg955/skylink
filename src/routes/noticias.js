@@ -269,6 +269,51 @@ router.post('/eliminarnoticias', async (req, res) => {
     }
        
   });
+
+  router.get('/verdetallesnoticias/:id_noticias', async (req, res) => {
+    try {
+      if (req.session.user) {
+        if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
+          req.session.user.lastVisit = Date.now();
+           var datosUsuario =  req.session.DatosUsuario;;
+  
+           try{        
+        const id_noticias = req.params.id_noticias;
+      const pool = await conex.getConnection();
+    
+      const querynoticiasBYId =  await pool 
+      .request()
+      .input('id_noticias', sql.VarChar, id_noticias)
+      .query(
+        "SELECT *, CONVERT(nvarchar, fecha, 105) AS fecha_convertida FROM noticias WHERE id_noticias = @id_noticias");
+    
+        
+    const vernoticiasById = querynoticiasBYId.recordset;
+    
+    res.render('../views/noticias/verdetallesnoticias.hbs', {vernoticiasById, datosUsuario})
+  }
+  catch (error) {
+    return res.send('Lo sentimos algo falló, contacta a el administrador del sistema')
+    
+  }
+  
+  }
+  else {
+  
+  return res.render('../views/login/login.hbs', {layout: 'partials/empty' }); 
+  }
+  }
+  else {
+  return res.render('../views/login/login.hbs', {layout: 'partials/empty' }); 
+  }
+  }
+  catch
+  {       
+  return res.render('../views/login/login.hbs', {layout: 'partials/empty' }); 
+  }
+  });
+
+
   async function verificarPermisos(req, res, next) {
     if (req.session.user) {
       const usuario = req.session.DatosUsuario[0].identificacionUsuario;

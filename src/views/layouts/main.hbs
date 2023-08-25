@@ -149,9 +149,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 botonescrear.style.display = 'block';     
             } else {
                 // Ocultar los botones de edición y eliminación
-                botonesEditar.forEach(boton => boton.style.display = 'none');
-                botonesEliminar.forEach(boton => boton.style.display = 'none');
-                botonescrear.style.display = 'none';
+                botonesEditar.forEach(boton => boton.remove());
+                botonesEliminar.forEach(boton => boton.remove());
+                botonescrear.remove();
             }
         })
         .catch(function (error) {

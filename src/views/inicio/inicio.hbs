@@ -1,7 +1,49 @@
 <style>
 
 
+.puntuacion {
 
+    color: #dc3545; /* Color del texto */
+    padding: 0.25rem 0.5rem; /* Espaciado interno */
+    border-radius: 50%; /* Borde redondeado */
+    text-align: center; /* Alineación del texto */
+    cursor: pointer; /* Cursor de apuntador */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
+    display: inline-block; /* Mostrar como bloque en línea */
+    margin: 0; /* Eliminar márgenes por defecto */
+
+}
+
+/* Estilos para diferentes rangos de puntuación */
+.puntuacion.rojo {
+  border: 1px solid #dc3545; /* Color del borde */
+
+  color: 	#ebf2f6;
+}
+
+.puntuacion.amarillo {
+  border: 1px solid yellow; /* Color del borde */
+
+  color: 	#ebf2f6;
+}
+
+.puntuacion.verde {
+  border: 1px solid green; /* Color del borde */
+  
+  color: #ebf2f6;
+}
+.puntuacion.verde:hover{
+    background-color: #6abf69;
+    color: black;
+}
+.puntuacion.rojo:hover{
+    background-color: #ff6b6b;
+    color: black;
+}
+.puntuacion.amarillo:hover{
+  background-color: #ffd166;
+    color: black;
+}
 
 
 .titulo{
@@ -58,16 +100,32 @@ p {
 .tituloinicio, .tipoinicio, .titulo_cursoinicio{
 color: #2a6e9e;
 }
+/* Agrega la animación de desvanecimiento */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Aplica la animación de desvanecimiento a los elementos */
+.animacion-componente.componente-visible,
+.animacion-curso.curso-visible,
+.animacion-noticia.noticia-visible {
+  animation: fadeIn 2s ease-out; /* Puedes ajustar la duración según tus preferencias */
+}
 
 </style>
 <body>
     
 
-    <h1 style="color: #ebf2f6 !important;" class="h1">mejor componente</h1>
+
     <div class="objetos">
 
-
-
+<div class="animacion-componente componente-contenedor componente-oculto">
+    <h1 style="color: #ebf2f6 !important;" class="h1">mejor componente</h1>
         {{#each queryinicioCO}}
         <div class="confeimg">
         <p style="display: none;">{{id_componenetes}}</p>
@@ -80,9 +138,9 @@ color: #2a6e9e;
         </div>
 
         {{/each}}
+</div>
 
-
-
+<div class="animacion-curso curso-contenedor curso-oculto">
     <h1 style="color: #ebf2f6 !important;" class="h1">mejor curso</h1>
 {{#each queryinicioCU}}
         <div class="confeimg">
@@ -91,14 +149,15 @@ color: #2a6e9e;
         <h1 class="titulo_cursoinicio h1"> {{titulo_curso}} </h1>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <h4 class="duracioninicio"> {{duracion}} </h4>
+        <h4 class="puntuacion">{{puntuacion}}</h4>
         </div>
         <br>
         <br>
         
         {{/each}}
-        
+        </div>
 
-
+<div class="animacion-noticia noticia-contenedor noticia-oculto">
         <h1 style="color: #ebf2f6 !important;" class="h1">noticia mas reciente</h1>
 {{#each queryinicioNO}}
         <div class="confeimg">
@@ -111,12 +170,86 @@ color: #2a6e9e;
         <br>
         <br>
         {{/each}}
-
+</div>
     </div>
             
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const puntuacionElements = document.querySelectorAll(".puntuacion");
 
+            puntuacionElements.forEach(puntuacionElement => {
+                const puntuacion = parseInt(puntuacionElement.textContent);
 
+                if (puntuacion >= 0 && puntuacion <= 45) {
+                    puntuacionElement.classList.add("rojo");
+                } else if (puntuacion >= 46 && puntuacion <= 85) {
+                    puntuacionElement.classList.add("amarillo");
+                } else if (puntuacion >= 86 && puntuacion <= 100) {
+                    puntuacionElement.classList.add("verde");
+                }
+            });
+        });
+    </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const cursosContenedores = document.querySelectorAll(".curso-contenedor");
+    
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove("curso-oculto");
+                entry.target.classList.add("curso-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    cursosContenedores.forEach(curso => {
+        observer.observe(curso);
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const noticiasContenedores = document.querySelectorAll(".noticia-contenedor");
+    
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove("noticia-oculto");
+                entry.target.classList.add("noticia-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    noticiasContenedores.forEach(curso => {
+        observer.observe(curso);
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const componenteContenedores = document.querySelectorAll(".componente-contenedor");
+    
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove("componente-oculto");
+                entry.target.classList.add("componente-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    componenteContenedores.forEach(curso => {
+        observer.observe(curso);
+    });
+});
+</script>
 
 
 </body>

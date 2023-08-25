@@ -245,7 +245,7 @@ router.post('/eliminarcursos', async (req, res) => {
   });
   
   // ---------------------------------------
-  router.get('/verdetalles/:id_cursos', async (req, res) => {
+  router.get('/verdetallescurso/:id_cursos', async (req, res) => {
     try {
       if (req.session.user) {
         if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {

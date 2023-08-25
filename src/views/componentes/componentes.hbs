@@ -130,8 +130,9 @@ background-color: blue
 </style>
 <body>
 
-    <div class="objetos">
-        
+<input type="text" id="tipoFiltro" placeholder="Escribe el tipo a buscar">
+<button id="aplicarFiltro">Aplicar filtro</button>
+
         <h1 class="h1"> Novedades Hardware y Pc</h1>
         <div class="contenedorComponentes">
             <button class="crearButton" id="crearButton"><a href="/crearcomponentes">crear</a></button>
@@ -147,13 +148,13 @@ background-color: blue
         <h4 class="precioinicio custom-h4 waves-effect"> {{formatCurrency precio}} </h4>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <p> 
-            <a href="" class="verdetalles">
+            <a href="/verdetallescomponente/{{id_componenetes}}" class="verdetalles">
                 ver mas detalles
             </a>
         </p>
         </div>
-        </div>
-        </div>
+        
+        
 
 
         <div class="contenedorComponentes">
@@ -162,7 +163,7 @@ background-color: blue
             <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_componenetes}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
 
         </div>
-        
+        </div>
 
         {{/each}}
         
@@ -224,6 +225,51 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const componentes = document.querySelectorAll(".componente-contenedor");
+
+    const tipoFiltro = document.getElementById("tipoFiltro");
+    const botonAplicarFiltro = document.getElementById("aplicarFiltro");
+
+    botonAplicarFiltro.addEventListener("click", function() {
+        const tipoFiltroValor = tipoFiltro.value.toLowerCase().trim();
+
+        componentes.forEach(componente => {
+            const tipoComponente = componente.querySelector(".tipoinicio").textContent.toLowerCase();
+            const botonesEditar = componente.querySelectorAll('.editarButton');
+            const botonesEliminar = componente.querySelectorAll('.eliminarButton');
+
+            if (tipoFiltroValor === "" || tipoComponente.includes(tipoFiltroValor)) {
+                componente.style.display = "block";
+                botonesEditar.forEach(boton => boton.style.display = "block");
+                botonesEliminar.forEach(boton => boton.style.display = "block");
+            } else {
+                componente.style.display = "none";
+                botonesEditar.forEach(boton => boton.style.display = "none");
+                botonesEliminar.forEach(boton => boton.style.display = "none");
+            }
+        });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove("componente-oculto");
+                entry.target.classList.add("componente-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    componentes.forEach(componente => {
+        observer.observe(componente);
+    });
+});
+</script>
+
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>

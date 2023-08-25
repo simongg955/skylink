@@ -11,7 +11,7 @@ const https = require('https'); // Importa el módulo https u otros módulos rel
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0; // Desactiva temporalmente la validación del certificado
 //DotEnv 
-//DotEnv 
+
 const { config } = require('./config')
 
 const app = express()
