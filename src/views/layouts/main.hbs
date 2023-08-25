@@ -1,8 +1,7 @@
 <style>
     body {
-        background-color: #25292d;
+        background-color: #1f2427;
         text-align: center;
-        text-shadow: 1px 2px 1px gray;
         margin: 0;
         padding: 0;
     }
@@ -21,7 +20,7 @@
 
     .list a {
         text-decoration: none;
-        color: #fff;
+        color: #3f9ce3;
         transition: color 0.3s ease-in-out;
     }
 
@@ -30,8 +29,8 @@
         justify-content: center; /* Centrar la barra horizontalmente */
         padding: 0px 20px;
         text-align: center;
-        color: rgb(70, 70, 238);
-        background-color: #25292d;
+        color: #3f9ce3;
+        background-color: #1f2427;
     }
 
     .barra li {
@@ -40,18 +39,18 @@
     }
 
     .barra a {
-        color: rgb(70, 70, 238);
+        color: #3f9ce3;
     }
 
     .titulo {
-        color: #fff;
+        color: 	#ebf2f6;
         text-align: center;
     }
 
     .divbar {
         overflow: hidden;
         text-align: center;
-        background-color: #25292d;
+        background-color: #1f2427;
         padding: 20px;
     }
 
@@ -60,18 +59,18 @@
         margin-top: 50px;
     }
 
-    p {
-        color: #fff;
-        margin-top: 75px;
-    }
+
 
     .h1 {
-        color: #fff;
+        color: 	#ebf2f6;
     }
 
     h1 {
         color: rgb(70, 70, 238);
     }
+
+
+
 
     @media (max-width: 1500px) {
         /* Estilos para pantallas más pequeñas */
@@ -81,7 +80,9 @@
         }
     }
 </style>
-
+<head>
+    <link rel="shortcut icon" href="assets/images/SkylinkX.png">
+</head>
 <body>
     
 
@@ -90,15 +91,15 @@
     <h1 class="titulo">Skylink X</h1>
     <nav class="barra">
         <ul class="list">
-            <div id="1">
+
         <li><a href="/inicio">inicio</a></li>
-        </div> <div id="2">
+ 
         <li><a href="/componentes">componentes</a></li>
-        </div><div id="3">
+       
         <li><a href="/cursos">cursos</a></li>
-        </div><div id="4">
+        
         <li><a href="/noticias">noticias</a></li>
-        </div>
+       
         </ul>
     </nav>
     </header>
@@ -133,50 +134,31 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    let botonCrear = document.getElementById('crearButton');
-    let botonEditar = document.getElementById('editarButton');
-    let botonEliminar = document.getElementById('eliminarButton');
-    let botonCrearCurso = document.getElementById('crearCursoButton');
-    let botonCrearComponentes = document.getElementById('crearComponentesButton');
-    let botonCrearNoticias = document.getElementById('crearNoticiasButton');
-    let botonEditarCursos = document.getElementById('editarCursosButton');
-    let botonEditarComponentes = document.getElementById('editarComponentesButton');
-    let botonEditarNoticias = document.getElementById('editarNoticiasButton');
+    const botonesEditar = document.querySelectorAll('.editarButton');
+    const botonesEliminar = document.querySelectorAll('.eliminarButton');
+    const botonescrear = document.getElementById('crearButton');
 
     axios.post('/PermisosSistemaPorRol', {})
         .then(function (response) {
-            // Cadena de permisos 
-            let permisosRol = response.data.PermisosSistemaPorRol;
+            const permisosRol = response.data.PermisosSistemaPorRol;
 
-            // Verificar si el usuario tiene el rol de administrador y los permisos necesarios
             if (permisosRol.includes('1') && permisosRol.includes('2') && permisosRol.includes('3')) {
-                // Mostrar los botones para el administrador
-                botonCrear.style.display = 'block';
-                botonEditar.style.display = 'block';
-                botonEliminar.style.display = 'block';
-                botonCrearCurso.style.display = 'block';
-                botonCrearComponentes.style.display = 'block';
-                botonCrearNoticias.style.display = 'block';
-                botonEditarCursos.style.display = 'block';
-                botonEditarComponentes.style.display = 'block';
-                botonEditarNoticias.style.display = 'block';
+                // Mostrar los botones de edición y eliminación
+                botonesEditar.forEach(boton => boton.style.display = 'block');          
+                botonesEliminar.forEach(boton => boton.style.display = 'block');
+                botonescrear.style.display = 'block';     
             } else {
-                // Ocultar los botones para otros roles
-                botonCrear.style.display = 'none';
-                botonEditar.style.display = 'none';
-                botonEliminar.style.display = 'none';
-                botonCrearCurso.style.display = 'none';
-                botonCrearComponentes.style.display = 'none';
-                botonCrearNoticias.style.display = 'none';
-                botonEditarCursos.style.display = 'none';
-                botonEditarComponentes.style.display = 'none';
-                botonEditarNoticias.style.display = 'none';
+                // Ocultar los botones de edición y eliminación
+                botonesEditar.forEach(boton => boton.style.display = 'none');
+                botonesEliminar.forEach(boton => boton.style.display = 'none');
+                botonescrear.style.display = 'none';
             }
         })
         .catch(function (error) {
             console.error("Error al obtener los permisos del usuario:", error);
         });
 });
+
 
 
 /*
@@ -449,3 +431,4 @@ document.addEventListener("DOMContentLoaded", () => {
     </script>
 
 </body>
+        {{!-- text-shadow: 1px 2px 1px gray; --}}

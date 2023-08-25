@@ -1,0 +1,180 @@
+ <style>
+
+
+.puntuacion {
+
+    color: #dc3545; /* Color del texto */
+    padding: 0.25rem 0.5rem; /* Espaciado interno */
+    border-radius: 50%; /* Borde redondeado */
+    text-align: center; /* Alineación del texto */
+    cursor: pointer; /* Cursor de apuntador */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
+    display: inline-block; /* Mostrar como bloque en línea */
+    margin: 0; /* Eliminar márgenes por defecto */
+}
+
+/* Estilos para diferentes rangos de puntuación */
+.puntuacion.rojo {
+  border: 1px solid #dc3545; /* Color del borde */
+
+  color: 	#ebf2f6;
+}
+
+.puntuacion.amarillo {
+  border: 1px solid yellow; /* Color del borde */
+
+  color: 	#ebf2f6;
+}
+
+.puntuacion.verde {
+  border: 1px solid green; /* Color del borde */
+  
+  color: #ebf2f6;
+}
+.puntuacion.verde:hover{
+    background-color: #6abf69;
+    color: black;
+}
+.puntuacion.rojo:hover{
+    background-color: #ff6b6b;
+    color: black;
+}
+.puntuacion.amarillo:hover{
+  background-color: #ffd166;
+    color: black;
+}
+
+.titulo{
+    color: #ebf2f6;
+    text-align: center;
+}
+.divbar{
+    overflow: hidden;
+    text-align: center;
+}
+
+img{
+    float: left;
+    margin-left: 300px;
+    margin-top: 30px;
+    border-radius: 100%;
+    -webkit-border-radius: 70%;
+    -moz-border-radius: 70%;
+    -ms-border-radius: 70%;
+    -o-border-radius: 70%;
+    height: 200px;
+    object-fit: cover;
+    /*Ajustalaimagenparallenarelespaciosindistorsión*/
+}
+
+.confiimg h1{
+    float : center;
+    margin-top: 50px;
+    
+}
+p {
+    margin-top: 75px;
+}
+
+.h1{
+    color: #ebf2f6;
+}
+h1{
+    color: rgb(70, 70, 238);
+}
+.objetos{
+    color: rgb(70, 70, 238) ;
+    margin-top: 30px;
+}
+.confeimg{
+    margin-top: 150px;
+}
+
+a{
+    text-decoration: none !important;
+    color: #ebf2f6;
+}
+.a{
+    color: #144c7a;
+    text-decoration: underline !important;
+}
+
+.descripcioninicio{
+    color: #ebf2f6 ;
+}
+.duracioninicio{
+    color: rgb(70, 70, 238) ;
+}
+.titulo_cursoinicio{
+    color: #2a6e9e ;
+}
+
+
+.contenedorCursos{
+      display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    }
+.boton{
+    background-color: black !important;
+    margin-top: 5px;
+
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateY(-450px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.animacion-curso {
+    animation: slideInFromLeft 0.7s ease-out;
+    
+}
+.atras{
+    color: black;
+}
+</style>
+
+<body>
+    
+
+ 
+        {{#each verCursosById}}
+        <div class="animacion-curso confeimg">
+        <p style="display: none;">{{id_cursos}}</p>
+        <img src="{{imagen}}">
+        <h4 class="puntuacion" style=" margin-bottom: 5px;">{{puntuacion}}</h4>
+        <h1 class="titulo_cursoinicio"> {{titulo_curso}} </h1>
+        <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        <h4 class="duracioninicio"> {{duracion}} </h4>
+        <a href="{{enlace_youtube}}" class="a">{{enlace_youtube}}</a>
+        </div>
+{{/each}}
+<div class="animacion-curso">
+<button class="boton"><a href="/cursos" class="atras"> atras</a></button>
+</div>
+            <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const puntuacionElements = document.querySelectorAll(".puntuacion");
+
+            puntuacionElements.forEach(puntuacionElement => {
+                const puntuacion = parseInt(puntuacionElement.textContent);
+
+                if (puntuacion >= 0 && puntuacion <= 45) {
+                    puntuacionElement.classList.add("rojo");
+                } else if (puntuacion >= 46 && puntuacion <= 85) {
+                    puntuacionElement.classList.add("amarillo");
+                } else if (puntuacion >= 86 && puntuacion <= 100) {
+                    puntuacionElement.classList.add("verde");
+                }
+            });
+        });
+    </script>
+        
+        </body>

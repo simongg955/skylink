@@ -1,38 +1,10 @@
 <style>
-    body{
-    background-color: #25292d;
-   text-align: center;
-}
 
-.list{
-    list-style-type: none !important;
-    display: flex;
-}
 
-.list li{
-    margin-right: 20px;
-    font-size: x-large;
-}
 
-.list  a {
-    text-decoration: none;
-    color: #fff;
-    transition: color 0.3s ease-in-out;
-}
 
-.barra{
-    display: flex;
-    padding: 0px 20px;
-    text-align: center;
-    margin-left: 250px;
-    margin-right: 250px;
-    color: rgb(70, 70, 238);
-}
-.barra a{
-    color: rgb(70, 70, 238);
-}
 .titulo{
-    color: #fff;
+    color: 	#ebf2f6;
     text-align: center;
 }
 .divbar{
@@ -54,18 +26,10 @@ img{
     /*Ajustalaimagenparallenarelespaciosindistorsión*/
 }
 
-.confiimg h1{
-    float : center;
-    margin-top: 50px;
-    
-}
-p {
-    color: #fff;
-    margin-top: 75px;
-}
+
 
 .h1{
-    color: #fff;
+    color: 	#ebf2f6;
 }
 h1{
     color: rgb(70, 70, 238);
@@ -76,6 +40,7 @@ h1{
 .confeimg{
     border: 3px transparent solid;
     margin-top: 5px;
+        text-align: center;
 
 }
 /* Estilos CSS personalizados para el h4 */
@@ -94,14 +59,14 @@ h1{
 
 .custom-h4:hover {
     background-color: #dc3545; /* Color de fondo al pasar el mouse */
-    color: #fff; /* Color del texto al pasar el mouse */
+    color: #ebf2f6; /* Color del texto al pasar el mouse */
 }
 
 .confeimg{
     margin-top: 150px;
 }
 .tipoinicio{
-    color: rgb(70, 70, 238) ;
+    color: #2a6e9e ;
 }
 .nombreinicio{
     color: rgb(70, 70, 238) ;
@@ -110,11 +75,15 @@ h1{
     color: rgb(70, 70, 238) ;
 }
 .descripcioninicio{
-    color: #fff ;
+    color: #ebf2f6 ;
+}
+.verdetalles{
+    color: #144c7a ;
+    text-decoration: underline !important;
 }
 a{
     text-decoration: none;
-    color: #fff;
+    color: #ebf2f6;
 }
 .crearButton{
     background-color: black;
@@ -123,7 +92,7 @@ a{
 
 .editarButton{
     background-color: black;
-    color: #fff;
+    color: #ebf2f6;
 
 }
 
@@ -132,40 +101,62 @@ background-color: blue
 }
 .eliminarButton{
     background-color: black;
-    color: #fff;
+    color: #ebf2f6;
 
 }
 .eliminarButton:hover{
     background-color: red !important;
 }
-.contenedorbtn{
+.contenedorComponentes{
       display: flex;
   justify-content: center;
   align-items: center;
 }
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+.animacion-componente.componente-visible {
+    animation: slideInFromLeft 0.5s ease-out;
+}
+
 </style>
 <body>
 
     <div class="objetos">
         
         <h1 class="h1"> Novedades Hardware y Pc</h1>
-        <div class="contenedorbtn">
+        <div class="contenedorComponentes">
             <button class="crearButton" id="crearButton"><a href="/crearcomponentes">crear</a></button>
         </div>
         {{#each querycomponentes}} 
+        <div class="animacion-componente componente-contenedor componente-oculto">
         <div class="confeimg">
-        <p style="display: none;">{{id_componenetes}}</p>
+        <p style="display: none;">{{id_componenetes}}</p>  
         <img src="{{imagen}}">
         <h1 class="tipoinicio"> {{tipo}} </h1>
         <h4 class="nombreinicio"> {{nombre}} </h4>
         <h4 class="fabricanteinicio"> {{fabricante}} </h4>
         <h4 class="precioinicio custom-h4 waves-effect"> {{formatCurrency precio}} </h4>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
+        <p> 
+            <a href="" class="verdetalles">
+                ver mas detalles
+            </a>
+        </p>
         </div>
-             
         </div>
-        
-        <div class="contenedorbtn">
+        </div>
+
+
+        <div class="contenedorComponentes">
             
             <button class="editarButton" id="editarButton"><a href="/editarcomponentes/{{id_componenetes}}"><i class="fas fa-edit"></i></a></button>
             <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_componenetes}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
@@ -176,41 +167,65 @@ background-color: blue
         {{/each}}
         
 
-        <script>
-    //Funcion para confirma sí un usuario va a eliminar un registro
-    function validarEliminar(id_componenetes) {
-
-        if (confirm("¿Se eliminará el componente seleccionado, estás seguro de que deseas continuar?")) {
-
-            axios.post('/eliminarcomponentes', {
-                id_componenetes: id_componenetes
-            })
-                .then(function (response) {
-
-                    alert(response.data.mensaje)
-                    var link = document.createElement("a");
-                    link.href = `/componentes`;
-                    link.click();
-
-                })
-                .catch(function (response) {
-
-                    alert(response.data.mensaje)
-                    var link = document.createElement("a");
-                    link.href = `/componentes`;
-                    link.click();
-                })
-
-        } else {
-
-            var link = document.createElement("a");
-            link.href = `/componentes`;
-            link.click();
-        }
-
+ <script>
+    // Función para confirmar si un usuario desea eliminar un registro
+    function validarEliminar(id_componentes) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Se eliminará el componente seleccionado, ¿deseas continuar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/eliminarcomponentes', {
+                    id_componentes: id_componentes
+                }).then(function (response) {
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: response.data.mensaje,
+                        icon: 'success'
+                    }).then(() => {
+                        window.location.href = '/componentes';
+                    });
+                }).catch(function (response) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: response.data.mensaje,
+                        icon: 'error'
+                    }).then(() => {
+                        window.location.href = '/componentes';
+                    });
+                });
+            }
+        });
     }
-
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const componenteContenedores = document.querySelectorAll(".componente-contenedor");
+    
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove("componente-oculto");
+                entry.target.classList.add("componente-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    componenteContenedores.forEach(curso => {
+        observer.observe(curso);
+    });
+});
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
     
 </body>

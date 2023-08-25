@@ -250,7 +250,7 @@ router.post('/eliminarnoticias', async (req, res) => {
        
        console.log(error);
        let mensaje = 'Lo siento no se pudo eliminar la noticia, contacte al administrador del sistema'
-       return res.send({ mensaje });
+       return res.send({ mensaje, datosUsuario});
   
      }   
     }
@@ -284,7 +284,8 @@ router.post('/eliminarnoticias', async (req, res) => {
       if (resultado.length > 0) {
         const codigoRol = resultado[0].codigoRol;
         const permisosRol = resultado[0].permisosRol;
-  
+
+        
         // Verificar los permisos necesarios
         if (codigoRol === 'ADMIN' && permisosRol.includes('1') && permisosRol.includes('2') && permisosRol.includes('3')) {
           // El usuario tiene los permisos necesarios, continuar
@@ -295,11 +296,11 @@ router.post('/eliminarnoticias', async (req, res) => {
         }
       } else {
         // No se encontró el usuario, redirigir al inicio de sesión
-        return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+        return res.redirect('/'); // Cambiar a la ruta de inicio de sesión correspondiente
       }
     } else {
       // No hay sesión de usuario, redirigir al inicio de sesión
-      return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+      return res.redirect('/'); // Cambiar a la ruta de inicio de sesión correspondiente
     }
   }
   

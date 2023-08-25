@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
   // console.log('estoy aca')
 });
 
-//----------Mostrar menú según permisos -----------------
+//----------Mostrar botones por roles  -----------------
 router.post("/PermisosSistemaPorRol", async (req, res) => {
   try {
     if (!req.session.user) {
@@ -108,6 +108,7 @@ router.post("/PermisosSistemaPorRol", async (req, res) => {
       const PermisosSistemaPorRol = resultado[0].permisosRol;
 
       // Devolver los permisos como respuesta
+
       return res.send({ PermisosSistemaPorRol });
     } else {
       // Si no se encontraron resultados, redirigir al inicio de sesión

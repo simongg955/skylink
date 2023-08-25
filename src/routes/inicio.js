@@ -23,7 +23,7 @@ router.get('/inicio',async function (req, res){
     const queryinicioCO = result.recordset;
     
     const results = await pool.request().query(
-        'select top 1 * from cursos'
+        'select top 1 * from cursos ORDER BY puntuacion DESC;'
     )
 
     const queryinicioCU = results.recordset;

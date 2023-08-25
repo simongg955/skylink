@@ -316,11 +316,11 @@ async function verificarPermisos(req, res, next) {
       }
     } else {
       // No se encontró el usuario, redirigir al inicio de sesión
-      return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+      return res.redirect('/'); // Cambiar a la ruta de inicio de sesión correspondiente
     }
   } else {
     // No hay sesión de usuario, redirigir al inicio de sesión
-    return res.redirect('/login'); // Cambiar a la ruta de inicio de sesión correspondiente
+    return res.redirect('/'); // Cambiar a la ruta de inicio de sesión correspondiente
   }
 }
 
