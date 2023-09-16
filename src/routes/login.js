@@ -39,28 +39,32 @@ router.post("/", async (req, res) => {
       .request()
       .input("user", sql.VarChar, user)
       .query(
-        "SELECT usuario.id_usuarios, usuario.identificacionUsuario, usuario.nombreCompletoUsuario, usuario.correoElectronicoUsuario, usuario.passwordUsuario, usuario.estadoUsuario, usuario.id_roles, rp.codigoRol, rp.codigoRol FROM Usuarios usuario INNER JOIN Roles rp ON usuario.id_roles = rp.id_roles WHERE usuario.identificacionUsuario = @user AND usuario.estadoRegistroUsuario = 'Activo'"
+        "SELECT usuario.id_usuarios, usuario.identificacionUsuario, usuario.nombreCompletoUsuario, usuario.correoElectronicoUsuario, usuario.passwordUsuario, usuario.estadoUsuario, usuario.id_roles, rp.codigoRol, rp.nombreRol FROM Usuarios usuario INNER JOIN Roles rp ON usuario.id_roles = rp.id_roles WHERE usuario.identificacionUsuario = @user AND usuario.estadoRegistroUsuario = 'Activo'"
       );
     const usuarioExisteDB = result.recordset;
     const userHashPassword = usuarioExisteDB[0].passwordUsuario;
 
     const isMatch = await bcrypt.compare(contrasena, userHashPassword);
-
+      
     if (isMatch) {
       // Contraseña correcta, permitir el inicio de sesión
+      const id_usuarios = usuarioExisteDB[0].id_usuarios;
       req.session.user = {
         username: usuarioExisteDB[0].identificacionUsuario,
         lastVisit: Date.now(),
       };
 
       let objDatosUsuario = usuarioExisteDB[0];
+      objDatosUsuario.id_usuarios = id_usuarios; // Agregar id_usuarios a los datos del usuario
       datosUsuario = [];
       datosUsuario.push(objDatosUsuario);
 
       req.session.DatosUsuario = datosUsuario;
 
-      req.session.save();
+
+
       return res.redirect("/inicio");
+
     } else {
       throw new Error("Usuario o contraseña inválidos");
     }
@@ -90,7 +94,6 @@ router.post("/PermisosSistemaPorRol", async (req, res) => {
     if (req.session.user.lastVisit + SECONDS * MILLISECONDS <= Date.now()) {
       return res.render("../views/login/login.hbs", { layout: "partials/empty" });
     }
-
     const datosUsuario = req.session.DatosUsuario;
     const usuario = datosUsuario[0].identificacionUsuario;
 
@@ -101,14 +104,13 @@ router.post("/PermisosSistemaPorRol", async (req, res) => {
       .query(
         "SELECT u.id_usuarios, u.identificacionUsuario, u.nombreCompletoUsuario, u.correoElectronicoUsuario, u.estadoUsuario, rp.codigoRol, rp.nombreRol, rp.permisosRol FROM Usuarios u INNER JOIN Roles rp ON u.id_roles = rp.id_roles WHERE u.identificacionUsuario = @usuario AND u.estadoUsuario = 'Activo' AND u.estadoRegistroUsuario = 'Activo' AND u.identificacionUsuario <> 'No registra' ORDER BY u.id_usuarios DESC"
       );
-
     const resultado = result.recordset;
-
+        
     if (resultado.length > 0) {
       const PermisosSistemaPorRol = resultado[0].permisosRol;
 
       // Devolver los permisos como respuesta
-
+      
       return res.send({ PermisosSistemaPorRol });
     } else {
       // Si no se encontraron resultados, redirigir al inicio de sesión

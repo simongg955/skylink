@@ -23,7 +23,7 @@ router.get('/noticias', async function (req, res) {
 
     const querynoticias = result.recordset
 
-    return res.render('../views/noticias/noticias.hbs', {querynoticias})
+    return res.render('../views/noticias/noticias.hbs', {querynoticias, datosUsuario})
 } catch (error) {
     console.log(error, '=====error======');
       let mensajeExcepcion = 'Lo siento no se puede cargar esta página, por favor contacta al administrador del sistema';
@@ -56,7 +56,7 @@ router.get('/crearnoticias',verificarPermisos, async function (req, res) {
             try {
 
 
-    return res.render('../views/noticias/crearnoticias.hbs' )
+    return res.render('../views/noticias/crearnoticias.hbs',{ datosUsuario} )
 } catch (error) {
     console.log(error, '=====error======');
       let mensajeExcepcion = 'Lo siento no se puede cargar esta página, por favor contacta al administrador del sistema';
@@ -151,7 +151,7 @@ router.get('/editarnoticias/:id_noticias',verificarPermisos, async function (req
   
   const editarnoticiasById = querynoticiasBYId.recordset;
   
-  res.render('../views/noticias/editarnoticias.hbs', {editarnoticiasById})
+  res.render('../views/noticias/editarnoticias.hbs', {editarnoticiasById, datosUsuario})
 } catch (error) {
     console.log(error, '=====error======');
       let mensajeExcepcion = 'Lo siento no se puede cargar esta página, por favor contacta al administrador del sistema';

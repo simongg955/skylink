@@ -1,6 +1,5 @@
  <style>
 
-
 .puntuacion {
 
     color: #dc3545; /* Color del texto */
@@ -31,26 +30,20 @@
   
   color: #ebf2f6;
 }
+
 .puntuacion.verde:hover{
     background-color: #6abf69;
     color: black;
 }
+
 .puntuacion.rojo:hover{
     background-color: #ff6b6b;
     color: black;
 }
+
 .puntuacion.amarillo:hover{
   background-color: #ffd166;
     color: black;
-}
-
-.titulo{
-    color: #ebf2f6;
-    text-align: center;
-}
-.divbar{
-    overflow: hidden;
-    text-align: center;
 }
 
 img{
@@ -67,25 +60,6 @@ img{
     /*Ajustalaimagenparallenarelespaciosindistorsión*/
 }
 
-.confiimg h1{
-    float : center;
-    margin-top: 50px;
-    
-}
-p {
-    margin-top: 75px;
-}
-
-.h1{
-    color: #ebf2f6;
-}
-h1{
-    color: rgb(70, 70, 238);
-}
-.objetos{
-    color: rgb(70, 70, 238) ;
-    margin-top: 30px;
-}
 .confeimg{
     margin-top: 150px;
 }
@@ -94,6 +68,7 @@ a{
     text-decoration: none !important;
     color: #ebf2f6;
 }
+
 .a{
     color: #144c7a;
     text-decoration: underline !important;
@@ -102,23 +77,32 @@ a{
 .descripcioninicio{
     color: #ebf2f6 ;
 }
+
 .duracioninicio{
     color: rgb(70, 70, 238) ;
 }
+
 .titulo_cursoinicio{
     color: #fff ;
-}
-
-
-.contenedorCursos{
-      display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .boton{
     background-color: black !important;
     margin-top: 5px;
+}
+
+.boton:hover{
+    background-color: red !important;
+}
+
+.comentariosCUR{
+        background-color: black;
+        color: #ebf2f6;
+}
+
+.comentariosCUR:hover{
+        background-color: rgb(163, 163, 1) !important; 
+        color: black;
 }
 
 @keyframes slideInFromLeft {
@@ -131,8 +115,7 @@ a{
 }
 
 .animacion-curso {
-    animation: slideInFromLeft 0.7s ease-out;
-    
+    animation: slideInFromLeft 0.7s ease-out;  
 }
 
 @keyframes slideInFromTop {
@@ -143,9 +126,9 @@ a{
         transform: translateX(0);
     }
 }
+
 .animacion-cursos {
     animation: slideInFromTop 0.7s ease-out;
-    
 }
 
 </style>
@@ -157,18 +140,21 @@ a{
         {{#each verCursosById}}
         <div class="animacion-curso confeimg">
         <p style="display: none;">{{id_cursos}}</p>
-        <img src="{{imagen}}">
+        <a href="{{imagen}}"><img src="{{imagen}}"></a>
         <h4 class="puntuacion" style=" margin-bottom: 5px;">{{puntuacion}}</h4>
         <h1 class="titulo_cursoinicio"> {{titulo_curso}} </h1>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <h4 class="duracioninicio"> {{duracion}} </h4>
         <a href="{{enlace_youtube}}" class="a">{{enlace_youtube}}</a>
         </div>
-{{/each}}
+
 <div class="animacion-cursos">
 <button class="boton"><a href="/cursos"> atras</a></button>
+<button class="comentariosCUR" id="comentariosCUR"><a href="/comentariosCUR/{{id_cursos}}
+"><i class="fas fa-comment"></i></a></button>
 </div>
-            <script>
+{{/each}}
+            <script>//----------------puntuacion
         document.addEventListener("DOMContentLoaded", function() {
             const puntuacionElements = document.querySelectorAll(".puntuacion");
 
@@ -183,7 +169,20 @@ a{
                     puntuacionElement.classList.add("verde");
                 }
             });
-        });
+    const filtroTituloGuardado = localStorage.getItem("filtroTitulo");
+
+    // Agregar el parámetro "filtro" al enlace para regresar a la página de cursos
+    const atrasButton = document.querySelector(".boton a");
+    if (atrasButton) {
+        if (filtroTituloGuardado) {
+            const cursosURL = "/cursos?filtro=" + encodeURIComponent(filtroTituloGuardado);
+            atrasButton.href = cursosURL;
+        } else{
+            atrasButton.href = "/cursos";
+        }
+    }
+});
+
     </script>
         
-        </body>
+</body>

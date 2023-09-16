@@ -1,8 +1,6 @@
 <style>
 
-
 .puntuacion {
-
     color: #dc3545; /* Color del texto */
     padding: 0.25rem 0.5rem; /* Espaciado interno */
     border-radius: 50%; /* Borde redondeado */
@@ -11,55 +9,44 @@
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
     display: inline-block; /* Mostrar como bloque en línea */
     margin: 0; /* Eliminar márgenes por defecto */
-
 }
 
 /* Estilos para diferentes rangos de puntuación */
 .puntuacion.rojo {
   border: 1px solid #dc3545; /* Color del borde */
-
   color: 	#ebf2f6;
 }
 
 .puntuacion.amarillo {
   border: 1px solid yellow; /* Color del borde */
-
   color: 	#ebf2f6;
 }
 
 .puntuacion.verde {
   border: 1px solid green; /* Color del borde */
-  
   color: #ebf2f6;
 }
+
 .puntuacion.verde:hover{
     background-color: #6abf69;
     color: black;
 }
+
 .puntuacion.rojo:hover{
     background-color: #ff6b6b;
     color: black;
 }
+
 .puntuacion.amarillo:hover{
   background-color: #ffd166;
     color: black;
 }
 
-
-.titulo{
-    color: #ebf2f6;
-    text-align: center;
-}
-.divbar{
-    overflow: hidden;
-    text-align: center;
-}
-
 img{
     float: left;
-    margin-left: 300px;
+    margin-left: 200px;
     margin-top: 30px;
-    border-radius: 100%;
+    border-radius: 70%;
     -webkit-border-radius: 70%;
     -moz-border-radius: 70%;
     -ms-border-radius: 70%;
@@ -69,37 +56,28 @@ img{
     /*Ajustalaimagenparallenarelespaciosindistorsión*/
 }
 
-.confiimg h1{
-    float : center;
-    margin-top: 50px;
-    
-}
 p {
     color: #ebf2f6;
     margin-top: 75px;
 }
 
 .h1{
-    color: #ebf2f6;
-}
-.h1{
-    color: rgb(70, 70, 238);
     text-align: center;
     margin-top: 150px;
 }
+
 .objetos{
     color: rgb(70, 70, 238) ;
 }
-.confeimg{
 
-
-}
 .descripcioninicio{
     color: #ebf2f6;
 }
+
 .tituloinicio, .tipoinicio, .titulo_cursoinicio{
 color: #2a6e9e;
 }
+
 /* Agrega la animación de desvanecimiento */
 @keyframes fadeIn {
   0% {
@@ -109,8 +87,46 @@ color: #2a6e9e;
     opacity: 1;
   }
 }
-
+/*.imagenfondo 
+    {
+    background-image: url(assets/images/edificio.jfif);
+    background-size: cover; 
+    background-repeat: no-repeat
+    }*/
 /* Aplica la animación de desvanecimiento a los elementos */
+
+.comentariosNOT{
+    background-color: black;
+}
+
+.comentariosNOT:hover{
+    background-color: rgb(163, 163, 1) !important; 
+}
+
+.comentariosCOM{
+    background-color: black;
+}
+
+.comentariosCOM:hover{
+    background-color:  rgb(163, 163, 1) !important;
+}
+
+.comentariosCUR{
+    background-color: black;
+}
+
+.comentariosCUR:hover{
+        background-color: rgb(163, 163, 1) !important; 
+}
+
+i{
+   color: #ebf2f6; 
+}
+
+i:hover{
+    color: black !important;
+}
+
 .animacion-componente.componente-visible,
 .animacion-curso.curso-visible,
 .animacion-noticia.noticia-visible {
@@ -119,7 +135,7 @@ color: #2a6e9e;
 
 </style>
 <body>
-    
+    {{!-- <div class="imagenfondo"> --}}
 
 
     <div class="objetos">
@@ -137,8 +153,9 @@ color: #2a6e9e;
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         </div>
 
-        {{/each}}
+        <button class="comentariosCOM" id="comentariosCOM"><a href="/comentariosCOM/{{id_componenetes}}"><i class="fas fa-comment"></i></a></button>
 </div>
+        {{/each}}
 
 <div class="animacion-curso curso-contenedor curso-oculto">
     <h1 style="color: #ebf2f6 !important;" class="h1">mejor curso</h1>
@@ -153,14 +170,15 @@ color: #2a6e9e;
         </div>
         <br>
         <br>
-        
-        {{/each}}
+        <button class="comentariosCUR" id="comentariosCUR"><a href="/comentariosCUR/{{id_cursos}}
+"><i class="fas fa-comment"></i></a></button>
         </div>
+        {{/each}}
 
 <div class="animacion-noticia noticia-contenedor noticia-oculto">
         <h1 style="color: #ebf2f6 !important;" class="h1">noticia mas reciente</h1>
 {{#each queryinicioNO}}
-        <div class="confeimg">
+        <div class="confeimgN">
         <p style="display: none;">{{id_noticias}}</p>
         <img src="{{imagen}}" alt="Product Image">
         <h1 class="tituloinicio h1"> {{titulo}} </h1>
@@ -169,10 +187,12 @@ color: #2a6e9e;
         </div>
         <br>
         <br>
-        {{/each}}
+        <button class="comentariosNOT" id="comentariosNOT"><a href="/comentariosNOT/{{id_noticias}}
+"><i class="fas fa-comment"></i></a></button>
 </div>
     </div>
-            
+        {{/each}}
+            {{!-- </div> --}}
 <script>
         document.addEventListener("DOMContentLoaded", function() {
             const puntuacionElements = document.querySelectorAll(".puntuacion");

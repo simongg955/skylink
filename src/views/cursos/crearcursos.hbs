@@ -1,6 +1,6 @@
 <style>
     body {
-        text-shadow: 1px 2px 1px gray;
+
     }
 
     .row {
@@ -8,6 +8,7 @@
         color: white !important;
         margin-top: 2px;
         margin-bottom: 2px;
+        text-shadow: 1px 2px 1px gray;  
 
     }
 
@@ -28,7 +29,7 @@
         box-shadow: rgb(160, 160, 160) 10px 10px 10px;
         margin-right: 10px;
         margin-left: 10px;
-        background-color: black !important;
+        background-color: #25292d !important;
     }
 
     .cancelar {
@@ -51,8 +52,18 @@
         background-color: green !important;
     }
 </style>
-
+    {{!-- const agregarButton = document.querySelector(".agregar a");
+    if (agregarButton) {
+        if (filtroTituloGuardado) {
+            const agregarcursosURL = "/cursos?filtro=" + encodeURIComponent(filtroTituloGuardado);
+            agregarButton.href = agregarcursosURL;
+        }
+    } --}}
+<head>
+    
+</head>
 <body>
+    <div class="table-responsive">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -125,4 +136,20 @@
                 </a></button>
         </div>
     </div>
+</div>
+
+    <script>
+        const filtroTituloGuardado = localStorage.getItem("filtroTitulo");
+        // Agregar el parámetro "filtro" al enlace para regresar a la página de cursos
+    const atrasButton = document.querySelector(".cancelarbtn a");
+    if (atrasButton) {
+        if (filtroTituloGuardado) {
+            const cursosURL = "/cursos?filtro=" + encodeURIComponent(filtroTituloGuardado);
+            atrasButton.href = cursosURL;
+        }else{
+            atrasButton.href = "/cursos";
+        }
+    }
+
+    </script>
 </body>

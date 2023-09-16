@@ -54,24 +54,82 @@
         padding: 20px;
     }
 
-    .confiimg h1 {
-        float: center;
-        margin-top: 50px;
-    }
-
-
-
-    .h1 {
-        color: 	#ebf2f6;
-    }
-
     h1 {
         color: rgb(70, 70, 238);
     }
 
+ /* Basic Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            float: right;
 
+        }
 
+        .dropdown-button {
+            background: url('/assets/images/imagenIconoUsuario.png') center center no-repeat;
+            background-size: 100% 100%; /* Ajusta la imagen al tamaño del botón */
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            margin-top: 0;
+            padding: 0; /* Asegura que no haya espacio adicional alrededor de la imagen */
+        }
 
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        /* Profile Image and Text */
+        .header-profile-user {
+            width: 0; /* Adjust as needed */
+            height: 0; /* Adjust as needed */
+            border-radius: 0%;
+        }
+
+        .user-info {
+            padding: 10px;
+        }
+
+        .user-info h6 {
+            margin: 0;
+        }
+
+        .user-info p {
+            margin: 5px 0;
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* Logout Button */
+        .logout-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: block;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        
+
+        .logout-button:hover{
+            background-color: red;
+        }
     @media (max-width: 1500px) {
         /* Estilos para pantallas más pequeñas */
         .barra li {
@@ -82,13 +140,85 @@
 </style>
 <head>
     <link rel="shortcut icon" href="assets/images/SkylinkX.png">
+    <link href="/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="" stylesheet type="text/css">
+
+    <!-- Icons Css -->
+
+
+    <!-- select2-->
+    {{!--
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    <link rel="stylesheet" href="/assets/js/select2.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/assets/js/jquery-ui.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    
+
 </head>
 <body>
     
 
 <header>
-    <div class="divbar">
+
+    {{!-- <div class="dropdown d-inline-block">
+                    <button type="button" class="btn header-item user text-start d-flex align-items-center"
+                        id="page-header-user-dropdown-v" data-bs-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+
+                        <img class="rounded-circle header-profile-user" src="/assets/images/imagenIconoUsuario.png"
+                            alt="Header Avatar">
+
+                        {{#each datosUsuario}}
+                        <span
+                            class="d-none d-xl-inline-block ms-2 fw-medium font-size-17">{{nombreCompletoUsuario}}</span>
+
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end pt-0">
+                        <div class="p-3 border-bottom">
+                            <h6 class="mb-0"> {{nombreCompletoUsuario}}</h6>
+                            <p class="mb-0 font-size-11 text-muted">- {{nombreRol}}</p>
+                            <p class="mb-0 font-size-11 text-muted"> {{correoElectronicoUsuario}}</p>
+                        </div>
+                        <form action="/salir" method="post">
+                            <hiddenfield value="salir" name="salir"></hiddenfield>
+                            <button class="dropdown-item"><i
+                                    class="mdi mdi-logout text-muted font-size-16 align-middle me-2"></i> <span
+                                    class="align-middle">Salir</span></button>
+
+                        </form>
+                    </div>
+                </div>
+                {{/each}} --}}
+                        <div class="dropdown d-inline-block">
+        <button type="button" class="btn header-item user text-start d-flex align-items-center dropdown-button">
+            <img class="rounded-circle header-profile-user" src="/assets/images/imagenIconoUsuario.png"
+                alt="Header Avatar">
+                {{!-- {{#each datosUsuario}}
+                <span
+                            class="d-none d-xl-inline-block ms-2 fw-medium font-size-17">{{nombreCompletoUsuario}}</span>
+                            {{/each}} --}}
+        </button> 
+
+        <div class="dropdown-content">
+            <div class="user-info">
+                {{#each datosUsuario}}
+        <h6>{{nombreCompletoUsuario}}</h6>
+        <p>{{nombreRol}}</p>
+        <p>{{correoElectronicoUsuario}}</p>
+{{/each}}
+            </div>
+
+            <form action="/salir" method="post">
+                <input type="hidden" value="salir" name="salir">
+                <button class="logout-button" ><i class="fa-solid fa-right-to-bracket"></i> <span class="align-middle">Salir</span></button>
+            </form>
+        </div>
+    </div>
+ 
     <h1 class="titulo">Skylink X</h1>
+    <div class="divbar">
     <nav class="barra">
         <ul class="list">
 
@@ -103,6 +233,9 @@
         </ul>
     </nav>
     </header>
+
+
+    </div>
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -428,7 +561,33 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
         })*/
+        document.addEventListener("DOMContentLoaded", function () {
+    const dropdownButton = document.querySelector(".dropdown-button");
+    const dropdown = document.querySelector(".dropdown");
+
+    dropdownButton.addEventListener("click", function (e) {
+        e.stopPropagation(); // Evita que el clic en el botón se propague al documento
+        dropdown.classList.toggle("active"); // Agregar o quitar la clase 'active' al hacer clic en el botón
+    });
+
+    // Agregar un manejador de eventos clic al documento para cerrar el menú cuando se hace clic en cualquier otro lugar
+    document.addEventListener("click", function (e) {
+        if (!dropdown.contains(e.target) && e.target !== dropdownButton) {
+            dropdown.classList.remove("active"); // Quitar la clase 'active' para cerrar el menú
+        }
+    });
+});
+
     </script>
 
+    <script src="/assets/libs/metismenujs/metismenujs.min.js"></script>
+    <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="/assets/libs/eva-icons/eva.min.js"></script>
+
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/xlsx.mini.min.js"></script>
+    <script src="/assets/js/axios.min.js"></script>
+    <script src="/assets/js/select2.min.js"></script>
+    <script src="/assets/js/html2pdf.bundle.min.js"></script>
 </body>
         {{!-- text-shadow: 1px 2px 1px gray; --}}

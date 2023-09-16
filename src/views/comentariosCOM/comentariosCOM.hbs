@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        margin: 10px;
+    }
+    .comment {
+        background-color: black;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            
+    }
+    .comentario{
+        color: white !important;
+    }
+    .botonatras{
+        background-color: black;
+        
+    }
+    .botonatras:hover{
+        background-color: red;
+    }
+    a{
+        text-decoration: none;
+        color: #ebf2f6;
+    }
+    .crearcomentariosCOM{
+        background-color: black;
+        
+    }
+    .crearcomentariosCOM:hover{
+        background-color: blue;
+    }
+    
+    .star-gold {
+        color: gold;
+        display: inline-block;
+    }
+
+    /* Estilo para estrellas vacías (grises) */
+    .star-empty {
+        color: #ccc; /* Cambia el color a tu preferencia */
+        display: inline-block;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RESEÑAS</h1>
+        {{#each mostrarComentariosCOM}}
+         <div class="comment">
+            <h1 class="comentario">{{comentario}}</h1>
+            <div class="stars">
+                {{#stars puntuacion}}
+                {{/stars}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <button class="botonatras" ><a href="/verdetallescomponente/{{id_componenetes}}">volver</a></button>
+    <button class="crearcomentariosCOM" ><a href="/crearcomentariosCOM/{{id_componenetes}}">crear comentarios</a></button>
+</body>
+</html>

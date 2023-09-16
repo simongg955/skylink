@@ -1,5 +1,48 @@
 <style>
+.precio {
 
+    color: #dc3545; /* Color del texto */
+    padding: 0.25rem 0.5rem; /* Espaciado interno */
+    border-radius: 50%; /* Borde redondeado */
+    text-align: center; /* Alineación del texto */
+    cursor: pointer; /* Cursor de apuntador */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
+    display: inline-block; /* Mostrar como bloque en línea */
+    margin: 0; /* Eliminar márgenes por defecto */
+
+}
+
+
+/* Estilos para diferentes rangos de puntuación */
+.precio.verde {
+    background-color: green;
+    color: white;
+}
+
+.precio.amarillo {
+    background-color: yellow;
+    color: black;
+}
+
+.precio.rojo {
+    background-color: red;
+    color: white;
+}
+
+.precio.verde:hover {
+    background-color: #6abf69;
+    color: black;
+}
+
+.precio.rojo:hover {
+    background-color: #ff6b6b;
+    color: black;
+}
+
+.precio.amarillo:hover {
+    background-color: #ffd166;
+    color: black;
+}
 
 
 
@@ -7,14 +50,11 @@
     color: 	#ebf2f6;
     text-align: center;
 }
-.divbar{
-    overflow: hidden;
-    text-align: center;
-}
+
 
 img{
     float: left;
-    margin-left: 300px;
+    margin-left: 200px; 
     margin-top: 30px;
     border-radius: 100%;
     -webkit-border-radius: 70%;
@@ -34,37 +74,8 @@ img{
 h1{
     color: rgb(70, 70, 238);
 }
-.objetos{
-    color: rgb(70, 70, 238) ;
-}
-.confeimg{
-    border: 3px transparent solid;
-    margin-top: 5px;
-        text-align: center;
 
-}
-/* Estilos CSS personalizados para el h4 */
-.custom-h4 {
-    border: 1px solid #dc3545; /* Color del borde */
-    background-color: transparent; /* Fondo transparente */
-    color: #dc3545; /* Color del texto */
-    padding: 0.25rem 0.5rem; /* Espaciado interno */
-    border-radius: 50%; /* Borde redondeado */
-    text-align: center; /* Alineación del texto */
-    cursor: pointer; /* Cursor de apuntador */
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
-    display: inline-block; /* Mostrar como bloque en línea */
-    margin: 0; /* Eliminar márgenes por defecto */
-}
 
-.custom-h4:hover {
-    background-color: #dc3545; /* Color de fondo al pasar el mouse */
-    color: #ebf2f6; /* Color del texto al pasar el mouse */
-}
-
-.confeimg{
-    margin-top: 150px;
-}
 .tipoinicio{
     color: #2a6e9e ;
 }
@@ -107,6 +118,7 @@ background-color: blue
 .eliminarButton:hover{
     background-color: red !important;
 }
+
 .contenedorComponentes{
       display: flex;
   justify-content: center;
@@ -127,11 +139,48 @@ background-color: blue
     animation: slideInFromLeft 0.5s ease-out;
 }
 
+    #aplicarFiltro:hover{
+        cursor: pointer;
+    }
+    #restablecerFiltro:hover{
+        cursor: pointer;
+    }
+    #precioFiltro:hover{
+        cursor: pointer;
+    }
+    #aplicarPrecioFiltro:hover{
+        cursor: pointer;
+    }
+    #aplicarNombreFiltro:hover{
+        cursor: pointer;
+    }
+
+
 </style>
 <body>
 
 <input type="text" id="tipoFiltro" placeholder="Escribe el tipo a buscar">
 <button id="aplicarFiltro">Aplicar filtro</button>
+
+<select id="precioFiltro">
+    <option value="0-999999999">elige una opcion</option>
+    <option value="0-100000">Menos de 100000</option>
+    <option value="100001-500000">100000 - 500000</option>
+    <option value="500001-1000000">500000 - 1000000</option>
+    <option value="1000001-1500000">1000000 - 1500000</option>
+    <option value="1500001-2000000">1500000 - 2000000</option>
+    <option value="2000001-2500000">2000000 - 2500000</option>
+    <option value="3000000-999999999">Más de 3000000</option>
+    <!-- Agrega más opciones según sea necesario -->
+</select>
+<button id="aplicarPrecioFiltro">Filtrar por precio</button>
+
+<input type="text" id="nombreFiltro" placeholder="Ingrese el nombre a filtrar">
+<button id="aplicarNombreFiltro">Filtrar por nombre</button>
+
+<br>
+<button id="restablecerFiltro" style="margin-top: 10px;">Restablecer busqueda</button>
+
 
         <h1 class="h1"> Novedades Hardware y Pc</h1>
         <div class="contenedorComponentes">
@@ -142,10 +191,10 @@ background-color: blue
         <div class="confeimg">
         <p style="display: none;">{{id_componenetes}}</p>  
         <img src="{{imagen}}">
-        <h1 class="tipoinicio"> {{tipo}} </h1>
+        <h1 class="tipoinicio" > {{tipo}} </h1>
         <h4 class="nombreinicio"> {{nombre}} </h4>
         <h4 class="fabricanteinicio"> {{fabricante}} </h4>
-        <h4 class="precioinicio custom-h4 waves-effect"> {{formatCurrency precio}} </h4>
+        <h4 class="precio"> {{formatCurrency precio}} </h4>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <p> 
             <a href="/verdetallescomponente/{{id_componenetes}}" class="verdetalles">
@@ -161,15 +210,22 @@ background-color: blue
             
             <button class="editarButton" id="editarButton"><a href="/editarcomponentes/{{id_componenetes}}"><i class="fas fa-edit"></i></a></button>
             <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_componenetes}}')"><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
+            
 
         </div>
         </div>
 
         {{/each}}
+        {{#if alerta}}
+  <div class="alert alert-warning" role="alert">
+    {{alerta}}
+  </div>
+{{/if}}
         
-
+            
  <script>
-    // Función para confirmar si un usuario desea eliminar un registro
+    //-------------------------------------- Función para confirmar si un usuario desea eliminar un registro
+
     function validarEliminar(id_componentes) {
         Swal.fire({
             title: '¿Estás seguro?',
@@ -204,9 +260,8 @@ background-color: blue
             }
         });
     }
-</script>
+//----------------------------------------------------------------animacion para cada vez que bajemos el componente se vea de izquierda a derecha
 
-<script>
 document.addEventListener("DOMContentLoaded", function() {
     const componenteContenedores = document.querySelectorAll(".componente-contenedor");
     
@@ -224,9 +279,76 @@ document.addEventListener("DOMContentLoaded", function() {
         observer.observe(curso);
     });
 });
-</script>
+//----------------------------------------------------------------circulo segun el precio
 
-<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const precioElements = document.querySelectorAll(".precio");
+
+    precioElements.forEach(precioElement => {
+        const precioText = precioElement.textContent.trim();
+        const precio = parseInt(precioText.replace(/\D/g, '')); // Elimina los caracteres no numéricos
+
+        if (precio >= 0 && precio <= 300000) {
+            precioElement.classList.add("verde");
+        } else if (precio >= 300001 && precio <= 2000000) {
+            precioElement.classList.add("amarillo");
+        } else {
+            precioElement.classList.add("rojo");
+        }
+    });
+});
+
+
+
+//----------------------------------------------------------------filtrar por nombre
+document.addEventListener("DOMContentLoaded", function(){
+    const componentes = document.querySelectorAll(".componente-contenedor");
+    const nombreFiltro = document.getElementById("nombreFiltro")
+    const botonaplicarNombreFiltro = document.getElementById("aplicarNombreFiltro")
+
+
+    botonaplicarNombreFiltro.addEventListener("click", function(){
+        const nombreFiltroValor = nombreFiltro.value.toLowerCase().trim();
+        const letras = nombreFiltroValor.split('').join('.*'); // Crear patrón de búsqueda
+        const regex = new RegExp(letras, "i"); // Expresión regular para buscar el patrón
+
+        componentes.forEach(componente => {
+        const nombreComponente = componente.querySelector('.nombreinicio').textContent.toLowerCase();
+        const botonesEditar = componente.querySelectorAll('.editarButton');
+        const botonesEliminar = componente.querySelectorAll('.eliminarButton');
+        const botonescomentariosCOM = componente.querySelectorAll('.comentariosCOM');
+        if(nombreFiltroValor === '' || regex.test(nombreComponente)){
+            componente.style.display = "block";
+            botonesEditar.forEach(boton => boton.style.display = "block");
+            botonesEliminar.forEach(boton => boton.style.display = "block");
+            botonescomentariosCOM.forEach(boton => boton.style.display = "block");
+        }else {
+            componente.style.display = "none";
+            botonesEditar.forEach(boton => boton.style.display = "none");
+            botonesEliminar.forEach(boton => boton.style.display = "none");
+            botonescomentariosCOM.forEach(boton => boton.style.display = "none");
+        }
+    })
+    })
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove("componente-oculto");
+                entry.target.classList.add("componente-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    componentes.forEach(componente => {
+        observer.observe(componente);
+    });
+    
+})
+
+//----------------------------------------------------------------filtrar por tipo
+
+
 document.addEventListener("DOMContentLoaded", function() {
     const componentes = document.querySelectorAll(".componente-contenedor");
 
@@ -235,20 +357,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     botonAplicarFiltro.addEventListener("click", function() {
         const tipoFiltroValor = tipoFiltro.value.toLowerCase().trim();
+        const letras = tipoFiltroValor.split('').join('.*'); // Crear patrón de búsqueda
+        const regex = new RegExp(letras, "i"); // Expresión regular para buscar el patrón
 
         componentes.forEach(componente => {
             const tipoComponente = componente.querySelector(".tipoinicio").textContent.toLowerCase();
             const botonesEditar = componente.querySelectorAll('.editarButton');
             const botonesEliminar = componente.querySelectorAll('.eliminarButton');
+            const botonescomentariosCOM = componente.querySelectorAll('.comentariosCOM');
 
-            if (tipoFiltroValor === "" || tipoComponente.includes(tipoFiltroValor)) {
+            if (tipoFiltroValor === "" || regex.test(tipoComponente)){
                 componente.style.display = "block";
                 botonesEditar.forEach(boton => boton.style.display = "block");
                 botonesEliminar.forEach(boton => boton.style.display = "block");
+                botonescomentariosCOM.forEach(boton => boton.style.display = "block");
             } else {
                 componente.style.display = "none";
                 botonesEditar.forEach(boton => boton.style.display = "none");
                 botonesEliminar.forEach(boton => boton.style.display = "none");
+                botonescomentariosCOM.forEach(boton => boton.style.display = "none");
             }
         });
     });
@@ -266,11 +393,43 @@ document.addEventListener("DOMContentLoaded", function() {
     componentes.forEach(componente => {
         observer.observe(componente);
     });
+});  
+//----------------------------------------------------------------filtrar por precio y restablecer filtro
+
+document.addEventListener("DOMContentLoaded", function() {
+    const componentes = document.querySelectorAll(".componente-contenedor");
+    const precioFiltro = document.getElementById("precioFiltro");
+    const botonAplicarPrecioFiltro = document.getElementById("aplicarPrecioFiltro");
+    const botonRestablecerFiltro = document.getElementById("restablecerFiltro");
+
+
+    botonAplicarPrecioFiltro.addEventListener("click", function() {
+        const precioFiltroValor = precioFiltro.value;
+
+        componentes.forEach(componente => {
+            const precioElement = componente.querySelector(".precio");
+            const precioComponente = parseInt(precioElement.textContent.replace(/\D/g, ''));
+
+            const rango = precioFiltroValor.split("-");
+            const rangoMinimo = parseInt(rango[0]);
+            const rangoMaximo = rango[1] === "+" ? Infinity : parseInt(rango[1]);
+
+            if (precioComponente >= rangoMinimo && precioComponente <= rangoMaximo) {
+                componente.style.display = "block";
+            } else {
+                componente.style.display = "none";
+            }
+        });
+    });
+    botonRestablecerFiltro.addEventListener("click", function() {
+        precioFiltro.value = ""; // Limpiar el campo de filtro
+        /*location.reload(); // Recargar la página*/
+        componentes.forEach(componente => {
+            componente.style.display = "block"; // Mostrar todos los componentes
+        });
+    });
 });
 </script>
-
-
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
     

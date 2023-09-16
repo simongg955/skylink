@@ -11,7 +11,7 @@
     cursor: pointer; /* Cursor de apuntador */
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Transiciones suaves */
     display: inline-block; /* Mostrar como bloque en línea */
-    margin: 0; /* Eliminar márgenes por defecto */
+    margin-top: 100px ; /* Eliminar márgenes por defecto */
 
 }
 
@@ -54,7 +54,7 @@
 
 img{
     float: left;
-    margin-left: 300px;
+    margin-left: 200px; 
     margin-top: 30px;
     border-radius: 100%;
     -webkit-border-radius: 70%;
@@ -76,6 +76,7 @@ p {
 h1{
     color: rgb(70, 70, 238);
 }
+
 .objetos{
     color: rgb(70, 70, 238) ;
     margin-top: 30px;
@@ -124,6 +125,9 @@ background-color: blue
     text-decoration: underline !important;
 }
 
+
+
+
 .contenedorCursos{
       display: flex;
   justify-content: center;
@@ -143,7 +147,12 @@ background-color: blue
     animation: slideInFromLeft 0.5s ease-out;
 }
 
-
+    #aplicarFiltro:hover{
+        cursor: pointer;
+    }
+    #restablecerFiltro:hover{
+        cursor: pointer;
+    }
 
 
 
@@ -151,6 +160,8 @@ background-color: blue
 <body>    
 <input type="text" id="tituloFiltro" placeholder="Escribe el titulo a buscar">
 <button id="aplicarFiltro">Aplicar filtro</button>
+<br>
+<button id="restablecerFiltro" style="margin-top: 10px;">Restablecer busqueda</button>
 
 
     <div class="objetos">
@@ -160,11 +171,11 @@ background-color: blue
         
     </div>
 {{#each querycursos}}
+        <h4 class="puntuacion" style="float: right; margin-bottom: 5px;">{{puntuacion}}</h4>
 <div class="animacion-curso curso-contenedor curso-oculto">
     <div class="confeimg">
         <p style="display: none;">{{id_cursos}}</p>
         <img src="{{imagen}}">
-        <h4 class="puntuacion" style="float: right; margin-bottom: 5px;">{{puntuacion}}</h4>
         <h1 class="titulo_cursoinicio"> {{titulo_curso}} </h1>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <h4 class="duracioninicio"> {{duracion}} </h4>
@@ -179,9 +190,11 @@ background-color: blue
     <div class="contenedorCursos">
         <button class="editarButton" id="editarButton"><a href="/editarcursos/{{id_cursos}}"><i class="fas fa-edit"></i></a></button>
         <button class="eliminarButton" id="eliminarButton" onclick="validarEliminar('{{id_cursos}}')" data-bs-original-title="Eliminar" ><i class="iconof fas fa-trash-alt" style="color: white;"></i></button>
+        
     </div>
 </div>
     <script>
+//-----------------------------------------------------------------circulo segun la puntuacion del curso
         document.addEventListener("DOMContentLoaded", function() {
             const puntuacionElements = document.querySelectorAll(".puntuacion");
 
@@ -200,7 +213,7 @@ background-color: blue
     </script>
     {{/each}}
 <script>
-    // Función para confirmar si un usuario desea eliminar un registro
+// ----------------------------------------------------------------Función para confirmar si un usuario desea eliminar un registro
     function validarEliminar(id_cursos) {
         Swal.fire({
             title: '¿Estás seguro?',
@@ -235,9 +248,7 @@ background-color: blue
             }
         });
         }
-</script>
-
-<script>
+//----------------------------------------------------------------animacion para cada vez que bajemos los cursos se vea de izquierda a derecha
 document.addEventListener("DOMContentLoaded", function() {
     const cursosContenedores = document.querySelectorAll(".curso-contenedor");
     
@@ -255,23 +266,39 @@ document.addEventListener("DOMContentLoaded", function() {
         observer.observe(curso);
     });
 });
-</script>
+      
+//---------------------------------------------------------------filtrar cursos por tipo y restablecer filtro
 
-<script>
 document.addEventListener("DOMContentLoaded", function() {
     const cursosContenedores = document.querySelectorAll(".curso-contenedor");
-
+    const botonRestablecerFiltro = document.getElementById("restablecerFiltro");
     const tituloFiltro = document.getElementById("tituloFiltro");
     const botonAplicarFiltro = document.getElementById("aplicarFiltro");
+    const filtroTituloGuardado = localStorage.getItem("filtroTitulo");
+    const urlParams = new URLSearchParams(window.location.search);
+    const filtroURL = urlParams.get("filtro");
 
-    botonAplicarFiltro.addEventListener("click", function() {
+    // Establecer el valor del filtro (de localStorage o de la URL)
+    const filtroActual = filtroURL || filtroTituloGuardado || "";
+    tituloFiltro.value = filtroActual;
+
+    // Activar el evento de filtrado automáticamente
+    if (filtroActual) {
+        botonAplicarFiltro.click();
+        
+    }
+     botonAplicarFiltro.addEventListener("click", aplicarFiltro);
+
+    function aplicarFiltro() {
         const tituloFiltroValor = tituloFiltro.value.toLowerCase().trim();
+        const letrasFiltro = [...new Set(tituloFiltroValor.split(''))]; // Obtener letras del filtro
 
         cursosContenedores.forEach(curso => {
             const tituloCurso = curso.querySelector(".titulo_cursoinicio").textContent.toLowerCase();
             const botonesContenedor = curso.querySelector(".contenedorCursos");
+            const todasLetrasPresentes = letrasFiltro.every(letra => tituloCurso.includes(letra));
 
-            if (tituloFiltroValor === "" || tituloCurso.includes(tituloFiltroValor)) {
+            if (tituloFiltroValor === "" || todasLetrasPresentes) {
                 curso.style.display = "block";
                 botonesContenedor.style.display = "flex";
             } else {
@@ -279,7 +306,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 botonesContenedor.style.display = "none";
             }
         });
-    });
+
+        // Actualizar la URL para reflejar el filtro actual
+        const url = new URL(window.location);
+        url.searchParams.set("filtro", tituloFiltroValor);
+        window.history.replaceState(null, null, url);
+
+        // Guardar el valor del filtro en localStorage
+        localStorage.setItem("filtroTitulo", tituloFiltroValor);
+    }
+    
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -294,12 +330,59 @@ document.addEventListener("DOMContentLoaded", function() {
     cursosContenedores.forEach(curso => {
         observer.observe(curso);
     });
+
+   botonRestablecerFiltro.addEventListener("click", function() {
+    tituloFiltro.value = ""; // Limpiar el campo de filtro
+
+    cursosContenedores.forEach(curso => {
+        curso.style.display = "block"; // Mostrar todos los cursos
+        const botonesContenedor = curso.querySelector(".contenedorCursos");
+        botonesContenedor.style.display = "flex"; // Mostrar los botones de edición/eliminación
+    });
+
+    // Eliminar el parámetro "filtro" de la URL
+    const url = new URL(window.location);
+    url.searchParams.delete("filtro");
+    window.history.replaceState(null, null, url);
+
+    // Limpiar el filtro en localStorage
+    localStorage.removeItem("filtroTitulo");
 });
+botonRestablecerFiltro.addEventListener("click", function() {
+    tituloFiltro.value = ""; // Limpiar el campo de filtro
+    location.reload();
+
+    cursosContenedores.forEach(curso => {
+        curso.style.display = "block"; // Mostrar todos los cursos
+        const botonesContenedor = curso.querySelector(".contenedorCursos");
+        botonesContenedor.style.display = "flex"; // Mostrar los botones de edición/eliminación
+    });
+
+    // Eliminar el parámetro "filtro" de la URL
+    const url = new URL(window.location);
+    url.searchParams.delete("filtro");
+    window.history.replaceState(null, null, url);
+
+    // Limpiar el filtro en localStorage
+    localStorage.removeItem("filtroTitulo");
+});
+
+});
+ 
+
 </script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+
+
+
+
+
+
+
+                           
 </body>
 
 

@@ -1,98 +1,56 @@
 <style>
-.titulo{
-    color: #ebf2f6;
-    text-align: center;
-}
-.divbar{
-    overflow: hidden;
-    text-align: center;
-}
-
-p {
-    margin-top: 75px;
-}
 
 img{
-    float: left;
-    margin-left: 300px;
-    margin-top: 30px;
     border-radius: 100%;
     -webkit-border-radius: 70%;
     -moz-border-radius: 70%;
     -ms-border-radius: 70%;
     -o-border-radius: 70%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
     /*Ajustalaimagenparallenarelespaciosindistorsión*/
 }
 
-
-p {
-    color: #ebf2f6;
-    margin-top: 75px;
-}
-
-.h1{
-    color: #ebf2f6;
-}
 h1{
     color: rgb(70, 70, 238);
 }
-.objetos{
-    color: rgb(70, 70, 238) ;
-    margin-top: 30px;
-}
+
 .confeimg{
-    margin-top: 150px;
+    margin-top: 50px;
 }
+
 .descripcioninicio{
     color: 	#ebf2f6 ;
 }
+
 .fecha{
     color: rgb(70, 70, 238) ;
 }
+
 .tituloinicio{
     color: #2a6e9e ;
-}
-.verdetalles{
-    color: #144c7a ;
-    text-decoration: underline !important;
 }
 
 a{
     text-decoration: none !important;
     color: 	#ebf2f6;
 }
-.crearButton{
-    background-color: black;
-color: 	#ebf2f6;
-}
-.editarButton{
-    background-color: black;
-    color: 	#ebf2f6;
 
-}
-
-.editarButton:hover{
-background-color: blue
-}
-.eliminarButton{
+.comentariosNOT{
     background-color: black;
-    color: 	#ebf2f6;
-
-}
-.eliminarButton:hover{
-    background-color: red !important;
-}
-.contenedorNoticias{
-      display: flex;
-  justify-content: center;
-  align-items: center;
+    color: #ebf2f6;
+    }
+.comentariosNOT:hover{
+    background-color: rgb(163, 163, 1) !important; 
+    color: black;
 }
 
 .boton{
-    background-color: black !important;
+    background-color: black ;
     margin-top: 5px;
+}
+.boton:hover{
+    background-color: red !important;
 }
 
 @keyframes slideInFromLeft {
@@ -132,15 +90,18 @@ background-color: blue
         {{#each vernoticiasById}}
         <div class="animacion-noticia confeimg">
         <p style="display: none;">{{id_noticias}}</p>
-        <img src="{{imagen}}">
+        <a href="{{imagen}}"><img src="{{imagen}}"></a>
         <h1 class="tituloinicio"> {{titulo}} </h1>
         <h4 class="descripcioninicio"> {{descripcion}} </h4>
         <h4 class="fecha">{{fecha_convertida}} </h4>
         </div>
-{{/each}}
+
 <div class="animacion-noticias">
 <button class="boton"><a href="/noticias"> atras</a></button>
+<button class="comentariosNOT" id="comentariosNOT"><a href="/comentariosNOT/{{id_noticias}}
+"><i class="fas fa-comment"></i></a></button>
 </div>
+{{/each}}
             <script>
         document.addEventListener("DOMContentLoaded", function() {
             const puntuacionElements = document.querySelectorAll(".puntuacion");
@@ -157,6 +118,8 @@ background-color: blue
                 }
             });
         });
+        document.getElementsByClassName
     </script>
         
         </body>
+        

@@ -7,38 +7,54 @@ const sql = require('mssql');
 var SECONDS = 350;
 var MILLISECONDS = 10000;
 
-router.get('/cursos', async function (req, res){
+router.get('/cursos', async (req, res) => {
   try {
-    if (req.session.user) {
-      if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
-        req.session.user.lastVisit = Date.now();
-        var datosUsuario =  req.session.DatosUsuario;
+      if (req.session.user) {
+          if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
+              req.session.user.lastVisit = Date.now();
+              const datosUsuario = req.session.DatosUsuario;
+              const filtroActual = req.query.filtro || '';
+              const filtroLetras = [...new Set(filtroActual.split(''))];
 
-       
+              const pool = await conex.getConnection();
+              let query = 'SELECT * FROM cursos';
+                
+              if (filtroLetras.length > 0) {
+                  const filtroQuery = filtroLetras.map(letra => {
+                      return `CHARINDEX('${letra}', titulo_curso) > 0`;
+                  }).join(' AND ');
 
-    const pool = await conex.getConnection();
-    const result = await pool.request().query(
-        'SELECT * FROM cursos'
-    )
+                  // Verificar que todas las letras estén presentes sin repeticiones
+                  query += ` WHERE ${filtroQuery}`;
+              } 
+                 
+              query += ' ORDER BY puntuacion DESC';
 
-    const querycursos = result.recordset
+              const result = await pool.request();
+              const querycursos = (await result.query(query)).recordset;
+              
 
-    return res.render('../views/cursos/cursos.hbs', {querycursos, datosUsuario})
-}
-else {
+              return res.render('../views/cursos/cursos.hbs', { querycursos, datosUsuario, filtroActual });
+          } else {
+              return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
+          }
+      } else {
+          return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
+      }
+  } catch (error) {
+      console.error(error);
+      return res.send('Lo sentimos, ha ocurrido un error. Por favor, contacta al administrador del sistema para obtener ayuda.');
+  }
+});
 
-  return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
-}
-}
-else {
-return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
-}
-}
-catch
-{
-return res.render('../views/login/login.hbs', { layout: 'partials/empty' });
-}
-})
+
+
+
+
+
+
+
+
 
 router.get('/crearcursos',verificarPermisos, async function (req, res) {
   try {

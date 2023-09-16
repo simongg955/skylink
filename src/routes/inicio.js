@@ -12,9 +12,9 @@ router.get('/inicio',async function (req, res){
         if (req.session.user) {
           if (req.session.user.lastVisit + (SECONDS * MILLISECONDS) > Date.now()) {
             req.session.user.lastVisit = Date.now();
-            var datosUsuario =  req.session.DatosUsuario;
-    
+            var datosUsuario = req.session.DatosUsuario;/*[0]; // Accede al primer elemento del arreglo*/
             try {
+              
     const pool = await conex.getConnection();
     const result = await pool.request().query(
         'select top 1 * from componentes'
@@ -34,7 +34,8 @@ router.get('/inicio',async function (req, res){
 
     const queryinicioNO = resultss.recordset;
 
-    return res.render('../views/inicio/inicio.hbs',{queryinicioCO, queryinicioCU, queryinicioNO})
+
+    return res.render('../views/inicio/inicio.hbs', {datosUsuario, queryinicioCO, queryinicioCU, queryinicioNO })
 } catch (error) {
     console.log(error, '=====error======');
       let mensajeExcepcion = 'Lo siento no se puede cargar esta página, por favor contacta al administrador del sistema';

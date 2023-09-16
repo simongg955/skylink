@@ -5,7 +5,7 @@ const router = express.Router();
 const conex = require("../database");
 const Handlebars = require("handlebars");
 const sql = require("mssql");
-var SECONDS = 350;
+var SECONDS = 350; 
 var MILLISECONDS = 10000;
 
 router.get("/componentes", async function (req, res) {
@@ -24,10 +24,10 @@ router.get("/componentes", async function (req, res) {
           const querycomponentes = result.recordset;
 
           return res.render("../views/componentes/componentes.hbs", {
-            querycomponentes,
+             querycomponentes, datosUsuario
           });
         } catch (error) {
-          console.log(error, "=====error======");
+          console.log(error, "rror======");
           let mensajeExcepcion =
             "Lo siento no se puede cargar esta página, por favor contacta al administrador del sistema";
           return res.render("../views/inicio/inicio", {
@@ -58,7 +58,14 @@ router.get("/crearcomponentes",verificarPermisos, async function (req, res) {
         var datosUsuario = req.session.DatosUsuario;
 
         try {
-          return res.render("../views/componentes/crearcomponentes.hbs");
+          const pool = await conex.getConnection();
+          const result = await pool
+            .request()
+            .query("select * from componentes");
+
+          const queryCComponentes = result.recordset;
+
+          return res.render("../views/componentes/crearcomponentes.hbs",{queryCComponentes, datosUsuario});
         } catch (error) {
           console.log(error, "=====error======");
           let mensajeExcepcion =
@@ -154,7 +161,7 @@ router.get("/editarcomponentes/:id_componenetes",verificarPermisos, async functi
   const editarcomponentesById = querycomponentesBYId.recordset;
 
   res.render("../views/componentes/editarcomponentes.hbs", {
-    editarcomponentesById,
+    editarcomponentesById, datosUsuario
   });
 
   } catch (error) {
